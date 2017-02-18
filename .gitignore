@@ -1,6 +1,6 @@
 ### SBT template
 # Simple Build Tool
-# http://www.scala-sbt.org/release/docs/Getting-Started/Directories.html#configuring-version-control
+# pl.http://www.scala-sbt.org/release/docs/Getting-Started/Directories.html#configuring-version-control
 
 target/
 lib_managed/
