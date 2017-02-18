@@ -1,4 +1,4 @@
-package pl.http.scalaj_client
+package pl.http.clients
 
 import java.util.concurrent.Executors
 

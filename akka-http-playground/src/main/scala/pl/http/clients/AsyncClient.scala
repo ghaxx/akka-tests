@@ -1,4 +1,4 @@
-package pl.http
+package pl.http.clients
 
 import java.util.concurrent.Executors
 

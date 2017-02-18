@@ -1,4 +1,4 @@
-package pl.http
+package pl.http.clients
 
 import java.util.concurrent.Executors
 
@@ -10,6 +10,7 @@ import scalaz.Scalaz._
 object ShakaClient extends App {
   import io.shaka.http.Http.http
   import io.shaka.http.Request.GET
+
   import scala.concurrent.duration._
 
   implicit val ec = ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())

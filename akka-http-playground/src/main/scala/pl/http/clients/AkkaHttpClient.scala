@@ -1,18 +1,12 @@
-package pl.http.akka_client
+package pl.http.clients
 
 import java.util.concurrent.Executors
 
-import akka.actor.ActorSystem
-import akka.http.scaladsl.Http
-import akka.http.scaladsl.model._
-import akka.http.scaladsl.server.Directives._
-import akka.stream.ActorMaterializer
 import org.slf4j.LoggerFactory
 import pl.performance.Timer
 
-import scala.concurrent.{Await, ExecutionContext}
-import scala.io.StdIn
 import scala.concurrent.duration._
+import scala.concurrent.{Await, ExecutionContext}
 
 object AkkaHttpClient extends App {
 
