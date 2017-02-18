@@ -4,30 +4,29 @@ import java.util.concurrent.Executors
 
 import pl.performance.Timer
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{Await, ExecutionContext, Future}
 import scalaj.http._
+import scalaz.Scalaz._
+import scala.concurrent.duration._
 
 object ScalajHttpClient extends App {
 //  implicit val ec = ExecutionContext.fromExecutorService(Executors.newFixedThreadPool(10))
   implicit val ec = ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
-  val request: HttpRequest = Http("pl.http://localhost:8080/random")
+  val request: HttpRequest = Http("http://localhost:8080/random")
 
-  val t = Timer("time")
-  def responseOne = Future {
-    request.asString
-  }
-  def responseTwo = Future {
-    request.asString
+  def asyncResponse = Future {
+    request.asString.body
   }
 
-  for {
-    a <- responseOne
-    b <- responseTwo
-  } yield {
-    println(s"${a.body}, ${b.body}")
-    println(t.status)
-    System.exit(0)
+  val t = Timer("scalaj async")
+  println("threads: " + Thread.activeCount())
+  val fResponses = (1 to 30).map {
+    _ => asyncResponse
   }
-
-  Thread.sleep(9000)
+  println("threads: " + Thread.activeCount())
+  fResponses.foreach {
+    r => Await.result(r, 10 seconds) |> println
+  }
+  println("threads: " + Thread.activeCount())
+  println(t.status)
 }

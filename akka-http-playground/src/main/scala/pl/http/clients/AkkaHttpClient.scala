@@ -7,6 +7,7 @@ import pl.performance.Timer
 
 import scala.concurrent.duration._
 import scala.concurrent.{Await, ExecutionContext}
+import scalaz.Scalaz._
 
 object AkkaHttpClient extends App {
 
@@ -17,43 +18,28 @@ object AkkaHttpClient extends App {
   import akka.http.scaladsl.model._
   import akka.stream.ActorMaterializer
 
-  import scala.concurrent.Future
-
   implicit val system = ActorSystem()
   implicit val materializer = ActorMaterializer()
-//  implicit val executionContext = system.dispatcher
+  //  implicit val executionContext = system.dispatcher
   implicit val executionContext = ExecutionContext.fromExecutor(Executors.newSingleThreadExecutor())
-//  implicit val executionContext = ExecutionContext.fromExecutor(Executors.newWorkStealingPool(8))
+  //  implicit val executionContext = ExecutionContext.fromExecutor(Executors.newWorkStealingPool(8))
 
-  Await.result(Future.sequence((1 to 10).map { _ => Future { Thread.sleep(10)}}), 1 second)
-
-  val r1: Future[HttpResponse] =
-    Http().singleRequest(HttpRequest(uri = "pl.http://localhost:8080/random"))
-  val r2: Future[HttpResponse] =
-    Http().singleRequest(HttpRequest(uri = "pl.http://localhost:8080/random"))
-  val r3: Future[HttpResponse] =
-    Http().singleRequest(HttpRequest(uri = "pl.http://localhost:8080/random"))
-
-
-  val t1 = Timer("time sim")
-  for {
-    a <- r1
-    b <- r2
-    c <- r3
-  } yield{
-    logger.info(t1.status)
-    logger.info(s"Got: $a $b")
+  def asyncResponse = {
+    Http()
+      .singleRequest(HttpRequest(uri = "http://localhost:8080/random"))
+      .flatMap(r => r.entity.toStrict(3 seconds))
+      .map(e => e.getData.decodeString("UTF-8"))
   }
 
-  val t2 = Timer("time seq")
-  for {
-    a <- Http().singleRequest(HttpRequest(uri = "pl.http://localhost:8080/random"))
-    b <- Http().singleRequest(HttpRequest(uri = "pl.http://localhost:8080/random"))
-    c <- Http().singleRequest(HttpRequest(uri = "pl.http://localhost:8080/random"))
-  } yield{
-    logger.info(t2.status)
-    logger.info(s"Got: $a $b")
+  val t = Timer("akka http async")
+  println("threads: " + Thread.activeCount())
+  val fResponses = (1 to 30).map {
+    _ => asyncResponse
   }
-
-  Thread.sleep(2000)
+  println("threads: " + Thread.activeCount())
+  fResponses.foreach {
+    r => Await.result(r, 10 seconds) |> println
+  }
+  println("threads: " + Thread.activeCount())
+  println(t.status)
 }

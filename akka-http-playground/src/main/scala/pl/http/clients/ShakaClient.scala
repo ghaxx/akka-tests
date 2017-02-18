@@ -21,14 +21,6 @@ object ShakaClient extends App {
   def asyncResponse = Future {
     response.entityAsString
   }
-//  val t1 = Timer("shaka sync")
-//  val r1 = response
-//  val r2 = response
-//  val r3 = response
-//  r1 |> println
-//  r1 |> println
-//  r1 |> println
-//  println(t1.status)
 
   val t2 = Timer("shaka async")
   println("threads: " + Thread.activeCount())
