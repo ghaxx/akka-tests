@@ -3,16 +3,11 @@ package pl.http.clients
 import java.util.concurrent.Executors
 
 import org.slf4j.LoggerFactory
-import pl.performance.Timer
 
 import scala.concurrent.duration._
-import scala.concurrent.{Await, ExecutionContext}
-import scalaz.Scalaz._
+import scala.concurrent.{Await, ExecutionContext, Future}
 
-object AkkaHttpClient extends App {
-
-  val logger = LoggerFactory.getLogger(AkkaHttpClient.getClass)
-
+object AkkaHttpClient extends App with ClientTestScenario {
   import akka.actor.ActorSystem
   import akka.http.scaladsl.Http
   import akka.http.scaladsl.model._
@@ -20,26 +15,23 @@ object AkkaHttpClient extends App {
 
   implicit val system = ActorSystem()
   implicit val materializer = ActorMaterializer()
-  //  implicit val executionContext = system.dispatcher
+  //    implicit val executionContext = system.dispatcher
   implicit val executionContext = ExecutionContext.fromExecutor(Executors.newSingleThreadExecutor())
-  //  implicit val executionContext = ExecutionContext.fromExecutor(Executors.newWorkStealingPool(8))
+//      implicit val executionContext = ExecutionContext.fromExecutor(Executors.newWorkStealingPool(8))
+//  val e = ExecutionContext.fromExecutor(Executors.newFixedThreadPool(12))
 
-  def asyncResponse = {
+  def makeRequest: Future[String] = {
     Http()
       .singleRequest(HttpRequest(uri = "http://localhost:8080/random"))
-      .flatMap(r => r.entity.toStrict(3 seconds))
+      .flatMap { r =>
+        println("done")
+        r.entity.toStrict(3 seconds)
+      }
       .map(e => e.getData.decodeString("UTF-8"))
   }
 
-  val t = Timer("akka http async")
-  println("threads: " + Thread.activeCount())
-  val fResponses = (1 to 30).map {
-    _ => asyncResponse
-  }
-  println("threads: " + Thread.activeCount())
-  fResponses.foreach {
-    r => Await.result(r, 10 seconds) |> println
-  }
-  println("threads: " + Thread.activeCount())
-  println(t.status)
+  val name = "akka http async"
+  runTest()
+  Await.result(system.terminate(), 10 seconds)
+
 }

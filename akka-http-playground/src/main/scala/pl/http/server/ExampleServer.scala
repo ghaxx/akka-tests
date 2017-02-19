@@ -27,7 +27,7 @@ object ExampleServer extends App with LazyLogging {
     Thread.sleep(duration)
     x
   }
-  private def requestDuration = 500
+  private def requestDuration = 2000
 
   val route =
     logRequestResult("Requests") {

@@ -8,7 +8,7 @@ import scala.concurrent.{Await, ExecutionContext, Future, Promise}
 import scala.util.Try
 import scalaz.Scalaz._
 
-object AsyncClient extends App {
+object AsyncClient extends App with ClientTestScenario {
 
   import org.asynchttpclient._
 
@@ -24,33 +24,31 @@ object AsyncClient extends App {
   val asyncHttpClient = new DefaultAsyncHttpClient(cf)
 //  val asyncHttpClient = new DefaultAsyncHttpClient()
 
-  def asyncResponse: Future[String] = {
-    val p = Promise[String]()
-    asyncHttpClient.prepareGet("http://localhost:8080/count").execute(new AsyncCompletionHandler[Response]() {
+  implicit class ScalaAsyncHttpClient(val request: BoundRequestBuilder) extends AnyVal {
+    def asyncExecute(): Future[Response] = {
+      val p = Promise[Response]()
+      request.execute(new AsyncCompletionHandler[Response]() {
 
-      def onCompleted(response: Response): Response = {
-        p.complete(Try(response.getResponseBody))
-        response
-      }
+        def onCompleted(response: Response): Response = {
+          p.complete(Try(response))
+          response
+        }
 
-      override def onThrowable(t: Throwable) = {
-        // Something wrong happened.
-      }
-    })
-    p.future
+        override def onThrowable(t: Throwable) = {
+          // Something wrong happened.
+        }
+      })
+      p.future
+    }
+    def asyncExecuteAsString(): Future[String] = {
+      asyncExecute().map(_.getResponseBody)
+    }
   }
 
-  val t2 = Timer("async")
-  println("threads: " + Thread.activeCount())
-  val fResponses = (1 to 30).map {
-    _ => asyncResponse
-  }
-  println("threads: " + Thread.activeCount())
-  fResponses.foreach {
-    r => Await.result(r, 10 seconds) |> println
-  }
-  println("threads: " + Thread.activeCount())
-  println(t2.status)
+  val get1 = asyncHttpClient.prepareGet("http://localhost:8080/count")
 
+  val name = "async"
+  def makeRequest: Future[String] = get1.asyncExecuteAsString()
+  runTest()
 
 }
