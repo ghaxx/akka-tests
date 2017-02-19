@@ -15,8 +15,8 @@ object AkkaHttpClient extends App with ClientTestScenario {
 
   implicit val system = ActorSystem()
   implicit val materializer = ActorMaterializer()
-  //    implicit val executionContext = system.dispatcher
-  implicit val executionContext = ExecutionContext.fromExecutor(Executors.newSingleThreadExecutor())
+      implicit val executionContext = system.dispatcher
+//  implicit val executionContext = ExecutionContext.fromExecutor(Executors.newSingleThreadExecutor())
 //      implicit val executionContext = ExecutionContext.fromExecutor(Executors.newWorkStealingPool(8))
 //  val e = ExecutionContext.fromExecutor(Executors.newFixedThreadPool(12))
 

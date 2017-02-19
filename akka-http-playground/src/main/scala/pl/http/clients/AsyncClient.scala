@@ -30,7 +30,7 @@ object AsyncClient extends App with ClientTestScenario {
       request.execute(new AsyncCompletionHandler[Response]() {
 
         def onCompleted(response: Response): Response = {
-          p.complete(Try(response))
+          p.success(response)
           response
         }
 
