@@ -14,36 +14,39 @@ object AsyncClient extends App with ClientTestScenario {
 
   import scala.concurrent.duration._
 
-  implicit val ec = ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
+//  implicit val ec = ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
 //    implicit val ec = ExecutionContext.fromExecutorService(Executors.newWorkStealingPool())
 //    implicit val ec = ExecutionContext.fromExecutorService(Executors.newFixedThreadPool(10))
 
-  val cf = new DefaultAsyncHttpClientConfig.Builder()
-    .setIoThreadsCount(2)
-    .build()
-  val asyncHttpClient = new DefaultAsyncHttpClient(cf)
-//  val asyncHttpClient = new DefaultAsyncHttpClient()
-
   implicit class ScalaAsyncHttpClient(val request: BoundRequestBuilder) extends AnyVal {
     def asyncExecute(): Future[Response] = {
-      val p = Promise[Response]()
+      asyncExecuteAndMap(identity)
+    }
+    def asyncExecuteAsString(): Future[String] = {
+      asyncExecuteAndMap(response => response.getResponseBody)
+    }
+    private def asyncExecuteAndMap[T](mapper: Response => T): Future[T] = {
+      val p = Promise[T]()
       request.execute(new AsyncCompletionHandler[Response]() {
 
         def onCompleted(response: Response): Response = {
-          p.success(response)
+          p.success(mapper(response))
           response
         }
 
         override def onThrowable(t: Throwable) = {
-          // Something wrong happened.
+          p.failure(t)
         }
       })
       p.future
     }
-    def asyncExecuteAsString(): Future[String] = {
-      asyncExecute().map(_.getResponseBody)
-    }
   }
+
+  val cf = new DefaultAsyncHttpClientConfig.Builder()
+    .setIoThreadsCount(1)
+    .build()
+  val asyncHttpClient = new DefaultAsyncHttpClient(cf)
+  //  val asyncHttpClient = new DefaultAsyncHttpClient()
 
   val get1 = asyncHttpClient.prepareGet("http://localhost:8080/count")
 

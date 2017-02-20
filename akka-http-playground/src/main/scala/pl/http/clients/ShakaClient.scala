@@ -11,8 +11,8 @@ object ShakaClient extends App with ClientTestScenario {
   import io.shaka.http.Http.http
   import io.shaka.http.Request.GET
 
-  implicit val ec = ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
-//  implicit val ec = ExecutionContext.fromExecutorService(Executors.newWorkStealingPool(100))
+//  implicit val ec = ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
+  implicit val ec = ExecutionContext.fromExecutorService(Executors.newFixedThreadPool(12))
 
   def response = http(GET("http://localhost:8080/count"))
 

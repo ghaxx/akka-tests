@@ -3,6 +3,8 @@ package pl.http.server
 import java.util.concurrent.atomic.AtomicLong
 
 import akka.actor.ActorSystem
+import akka.event.Logging
+import akka.event.Logging.LogLevel
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.marshalling.{ToResponseMarshallable, ToResponseMarshaller}
 import akka.http.scaladsl.server.Directives._
@@ -22,15 +24,16 @@ object ExampleServer extends App with LazyLogging {
   implicit val executionContext = system.dispatcher
   val counter = new AtomicLong()
 
-  private def delayedComplete[T](duration: Int)(x: => T)(implicit _marshaller: ToResponseMarshaller[T]) =
+  private def delayedComplete[T](duration: Int)(x: => T)(implicit marshaller: ToResponseMarshaller[T]) =
     complete {
-    Thread.sleep(duration)
-    x
-  }
+      Thread.sleep(duration)
+      x
+    }
+
   private def requestDuration = 2000
 
   val route =
-    logRequestResult("Requests") {
+    logRequestResult("Requests", Logging.InfoLevel) {
       path("random") {
         delayedComplete(requestDuration) {
           "" + Random.nextInt(100)
@@ -44,7 +47,8 @@ object ExampleServer extends App with LazyLogging {
 
   val bindingFuture = Http().bindAndHandle(route, "localhost", 8080)
 
-  logger.info(s"Server online at http://localhost:8080/\nPress RETURN to stop...")
+  logger.info("Server online at http://localhost:8080")
+  logger.info("Press RETURN to stop")
   StdIn.readLine()
   bindingFuture
     .flatMap(_.unbind())

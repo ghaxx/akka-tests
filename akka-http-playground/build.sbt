@@ -14,7 +14,10 @@ libraryDependencies ++= Seq(
   "com.chuusai" %% "shapeless" % "2.3.2",
   "org.scalaj" %% "scalaj-http" % "2.3.0",
   "io.shaka" %% "naive-http" % "90",
-  "org.asynchttpclient" % "async-http-client" % "2.0.29"
+  "org.asynchttpclient" % "async-http-client" % "2.0.29",
+  "org.apache.httpcomponents" % "httpasyncclient" % "4.1.3",
+  "commons-io" % "commons-io" % "2.5",
+  "com.squareup.okhttp3" % "okhttp" % "3.6.0"
 )
 
 resolvers += "Tim Tennant's repo" at "http://dl.bintray.com/timt/repo/"

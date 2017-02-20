@@ -12,10 +12,10 @@ trait ClientTestScenario {
 
   def makeRequest: Future[String]
 
-  def runTest()(implicit ec: ExecutionContext) = {
+  def runTest(numberOfRequests: Int = 30) = {
     val timer = Timer(name)
     println("Threads before requests: " + Thread.activeCount())
-    val fResponses = (1 to 30).map {
+    val fResponses = (1 to numberOfRequests).map {
       _ => makeRequest
     }
     println("Threads after requests: " + Thread.activeCount())
