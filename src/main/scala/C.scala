@@ -1,3 +1,3 @@
 object C {
-  def c = A.a + B.b
+  def c = B.b
 }
