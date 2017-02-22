@@ -7,3 +7,5 @@ object B {
 }
 
 A.a + B.b
+
+A.a
