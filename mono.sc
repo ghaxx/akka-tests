@@ -1,9 +1,9 @@
 object A {
-  def a = 7
+  def not_a = 7
 }
 
 object B {
   def b = 8
 }
 
-A.a + B.b
+B.b
