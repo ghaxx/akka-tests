@@ -13,6 +13,7 @@ lazy val `spray-client` = project
 lazy val `performance-kit` = project
 lazy val `github-client` = project.dependsOn(`scala-async-http-client`)
 lazy val `scala-async-http-client` = project
+lazy val `akka-actors-playground` = project
 
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-actor" % akkaStreamsVersion,

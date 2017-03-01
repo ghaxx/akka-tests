@@ -75,3 +75,5 @@ project/plugins/project/
 .worksheet
 
 # Created by .ignore support plugin (hsz.mobi)
+
+application.conf
