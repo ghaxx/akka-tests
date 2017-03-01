@@ -13,34 +13,13 @@ object AsyncClient extends App with ClientTestScenario {
   import org.asynchttpclient._
 
   import scala.concurrent.duration._
+  import ScalaAsyncHttpClient._
 
 //  implicit val ec = ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
 //    implicit val ec = ExecutionContext.fromExecutorService(Executors.newWorkStealingPool())
 //    implicit val ec = ExecutionContext.fromExecutorService(Executors.newFixedThreadPool(10))
 
-  implicit class ScalaAsyncHttpClient(val request: BoundRequestBuilder) extends AnyVal {
-    def asyncExecute(): Future[Response] = {
-      asyncExecuteAndMap(identity)
-    }
-    def asyncExecuteAsString(): Future[String] = {
-      asyncExecuteAndMap(response => response.getResponseBody)
-    }
-    private def asyncExecuteAndMap[T](mapper: Response => T): Future[T] = {
-      val p = Promise[T]()
-      request.execute(new AsyncCompletionHandler[Response]() {
 
-        def onCompleted(response: Response): Response = {
-          p.success(mapper(response))
-          response
-        }
-
-        override def onThrowable(t: Throwable) = {
-          p.failure(t)
-        }
-      })
-      p.future
-    }
-  }
 
   val cf = new DefaultAsyncHttpClientConfig.Builder()
     .setIoThreadsCount(1)

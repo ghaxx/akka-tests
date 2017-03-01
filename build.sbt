@@ -8,9 +8,11 @@ lazy val root = project.in(file("."))
     scalaVersion := "2.12.1"
   )
 
-lazy val `akka-http-playground` = project.dependsOn(`performance-kit`)
+lazy val `akka-http-playground` = project.dependsOn(`performance-kit`, `scala-async-http-client`)
 lazy val `spray-client` = project
 lazy val `performance-kit` = project
+lazy val `github-client` = project.dependsOn(`scala-async-http-client`)
+lazy val `scala-async-http-client` = project
 
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-actor" % akkaStreamsVersion,
