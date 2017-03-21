@@ -47,4 +47,9 @@ object Timer {
     t.reset()
     t
   }
+  def elapsed(f: => Any): Long = {
+    val t = new Timer("Time taken")
+    f
+    t.elapsed
+  }
 }

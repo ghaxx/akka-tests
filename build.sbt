@@ -6,18 +6,17 @@ lazy val `scala-tests` = project.in(file("."))
     version := "1.0"
   )
 
-lazy val `akka-http-playground` = project.dependsOn(`performance-kit`, `scala-async-http-client`)
-lazy val `spray-client` = project
-lazy val `performance-kit` = project
-lazy val `github-client` = project.dependsOn(`scala-async-http-client`)
-lazy val `scala-async-http-client` = project
-lazy val misc = project
 lazy val `akka-actors-playground` = project
+lazy val `akka-http-playground` = project.dependsOn(`performance-kit`, `scala-async-http-client`)
+lazy val `performance-kit` = project
+lazy val misc = project
+lazy val `slick-playground` = project.dependsOn(`performance-kit`)
+lazy val `scala-async-http-client` = RootProject(uri("git://github.com/ghaxx/scala-async-http-client.git"))
+lazy val `spray-client` = project
 
-resolvers += "Akka Snapshot Repository" at "pl.http://repo.akka.io/snapshots/"
-resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
-resolvers ++= Seq(
-  Resolver.sonatypeRepo("releases"),
-  Resolver.sonatypeRepo("snapshots")
+libraryDependencies in ThisBuild ++= Seq(
+  "org.scalatest" %% "scalatest" % "3.0.0" % "test",
+  "ch.qos.logback" % "logback-classic" % "1.1.8",
+  "com.typesafe.scala-logging" %% "scala-logging" % "3.5.0"
 )
-resolvers += "spray repo" at "pl.http://repo.spray.io"
+
