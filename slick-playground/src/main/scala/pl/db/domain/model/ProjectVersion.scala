@@ -20,9 +20,9 @@ object ProjectVersion {
       ProjectVersion(
         id = None,
         projectId = p,
-        releaseName = s"0.$v",
-        releaseDate = Timestamp.from(Instant.now().minus(i, ChronoUnit.DAYS)),
-        details = s"Details #$v"
+        releaseName = s"0.$i",
+        releaseDate = Timestamp.from(Instant.now().minus(v, ChronoUnit.DAYS)),
+        details = s"Details #$i"
       )
   }
 

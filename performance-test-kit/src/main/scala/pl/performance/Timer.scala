@@ -5,13 +5,16 @@ class Timer(name: String) {
   private var currentElapsed = 0L
   private var running = true
   private var time = now
-  def status = s"[$name] ${formatter.format(elapsed)} ms"
+  def status = s"[$name] $prettyElapsed ms"
   def elapsed = {
     if (running) {
       currentElapsed += now - time
       time = now
     }
     currentElapsed
+  }
+  def prettyElapsed = {
+    formatter.format(elapsed)
   }
 
   def reset() = {
@@ -36,6 +39,13 @@ class Timer(name: String) {
     time = now
   }
 
+  def measure(f: => Any): Long = {
+    start()
+    f
+    pause()
+    elapsed
+  }
+
   private def now = System.currentTimeMillis()
 }
 
@@ -47,9 +57,14 @@ object Timer {
     t.reset()
     t
   }
-  def elapsed(f: => Any): Long = {
-    val t = new Timer("Time taken")
+  def measure(f: => Any): Long = {
+    val t = new Timer("")
     f
     t.elapsed
+  }
+  def measureAndReturn[T](f: => T): (Long, T) = {
+    val t = new Timer("")
+    val r = f
+    (t.elapsed, r)
   }
 }

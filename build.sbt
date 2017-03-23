@@ -7,10 +7,10 @@ lazy val `scala-tests` = project.in(file("."))
   )
 
 lazy val `akka-actors-playground` = project
-lazy val `akka-http-playground` = project.dependsOn(`performance-kit`, `scala-async-http-client`)
-lazy val `performance-kit` = project
+lazy val `akka-http-playground` = project.dependsOn(`performance-test-kit`, `scala-async-http-client`)
+lazy val `performance-test-kit` = project
 lazy val misc = project
-lazy val `slick-playground` = project.dependsOn(`performance-kit`)
+lazy val `slick-playground` = project.dependsOn(`performance-test-kit`)
 lazy val `scala-async-http-client` = RootProject(uri("git://github.com/ghaxx/scala-async-http-client.git"))
 lazy val `spray-client` = project
 
