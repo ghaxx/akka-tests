@@ -9,9 +9,9 @@ class ProjectTable(tag: Tag) extends Table[Project](tag, "PROJECT") {
   def name = column[String]("NAME")
   def author = column[String]("AUTHOR")
   def description = column[String]("DESCRIPTION")
-  def latestVersion = column[Option[Long]]("LATEST_VERSION")
+  def latestVersionId = column[Option[Long]]("LATEST_VERSION_ID")
 
-  def * = (id, name, author, description, latestVersion) <> ((Project.apply _).tupled, Project.unapply)
+  def * = (id, name, author, description, latestVersionId) <> ((Project.apply _).tupled, Project.unapply)
 
 
 }

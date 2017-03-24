@@ -10,7 +10,7 @@ object ProjectVersionTableQuery extends TableQuery(new ProjectVersionTable(_)) {
   def insert(version: ProjectVersion) = {
     for {
       inserted <- forInsert += version
-      _ <- sqlu"""update PROJECT p set LATEST_VERSION=${inserted.id.get} where ID=${inserted.projectId} and (LATEST_VERSION is null or ${inserted.releaseDate}>=(select RELEASE_DATE from PROJECT_VERSION where ID=p.LATEST_VERSION))"""
+      _ <- sqlu"""update PROJECT set LATEST_VERSION=${inserted.id.get} where ID=${inserted.projectId} and (LATEST_VERSION is null or ${inserted.releaseDate}>=(select RELEASE_DATE from PROJECT_VERSION where ID=PROJECT.LATEST_VERSION))"""
     } yield {
       inserted
     }
@@ -20,9 +20,9 @@ object ProjectVersionTableQuery extends TableQuery(new ProjectVersionTable(_)) {
     def updateVersion(v: ProjectVersion) = {
       val lv = for {
         p <- ProjectTableQuery
-        oldV <- ProjectVersionTableQuery.filter(_.id === p.latestVersion)
-        if p.id === v.projectId && (p.latestVersion.isEmpty || oldV.releaseDate <= v.releaseDate)
-      } yield p.latestVersion
+        oldV <- ProjectVersionTableQuery.filter(_.id === p.latestVersionId)
+        if p.id === v.projectId && (p.latestVersionId.isEmpty || oldV.releaseDate <= v.releaseDate)
+      } yield p.latestVersionId
       lv.update(v.id)
     }
 
@@ -42,8 +42,8 @@ object ProjectVersionTableQuery extends TableQuery(new ProjectVersionTable(_)) {
 
     def updateVersion(v: ProjectVersion) = {
       val lv = for {
-        p <- ProjectTableQuery if p.id === v.projectId && (p.latestVersion.isEmpty || maxDate(p.id) <= v.releaseDate)
-      } yield p.latestVersion
+        p <- ProjectTableQuery if p.id === v.projectId && (p.latestVersionId.isEmpty || maxDate(p.id) <= v.releaseDate)
+      } yield p.latestVersionId
       lv.update(v.id)
     }
 

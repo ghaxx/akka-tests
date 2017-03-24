@@ -5,7 +5,7 @@ case class Project(
   name: String,
   author: String,
   description: String,
-  latestVersion: Option[Long]
+  latestVersionId: Option[Long]
 )
 
 object Project {
@@ -17,7 +17,7 @@ object Project {
         name = s"Project #$i",
         author = s"Author #$i",
         description = s"Description #$i",
-        latestVersion = None
+        latestVersionId = None
       )
   }
 

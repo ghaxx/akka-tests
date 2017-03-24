@@ -22,7 +22,7 @@ object ProjectTableQuery extends TableQuery(new ProjectTable(_)) {
   def allWithLatestVersionsByRef =  {
     for {
       p <- this
-      m <- ProjectVersionTableQuery if m.id === p.latestVersion
+      m <- ProjectVersionTableQuery if m.id === p.latestVersionId
     } yield (p, m)
   }
 }
