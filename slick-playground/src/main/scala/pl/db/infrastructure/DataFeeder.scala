@@ -46,7 +46,7 @@ class DataFeeder {
       } yield {
         for (p <- projects) {
           val s = ProjectVersion.gen(p.id.get, versionsPerProject).map {
-            v => ProjectVersionTableQuery.insert(v)
+            v => ProjectVersionTableQuery.insertSlick(v)
           }
           val r = db.run(DBIO.seq(s: _*))
           Await.result(r, to)

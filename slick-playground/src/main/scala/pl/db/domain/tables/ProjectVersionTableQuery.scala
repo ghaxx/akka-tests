@@ -19,10 +19,11 @@ object ProjectVersionTableQuery extends TableQuery(new ProjectVersionTable(_)) {
   def insertSlick(version: ProjectVersion) = {
     def updateVersion(v: ProjectVersion) = {
       val lv = for {
-        p <- ProjectTableQuery
+        p <- ProjectTableQuery if p.id === v.projectId
         oldV <- ProjectVersionTableQuery.filter(_.id === p.latestVersionId)
-        if p.id === v.projectId && (p.latestVersionId.isEmpty || oldV.releaseDate <= v.releaseDate)
+        if p.latestVersionId.isEmpty || oldV.releaseDate <= v.releaseDate
       } yield p.latestVersionId
+      lv.update(v.id).statements.foreach(println)
       lv.update(v.id)
     }
 

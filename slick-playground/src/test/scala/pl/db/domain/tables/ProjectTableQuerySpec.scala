@@ -15,8 +15,8 @@ class ProjectTableQuerySpec extends UnitSpec {
 
   import slick.jdbc.H2Profile.api._
 
-  val numberOfProjects = 20
-  val numberOfVersions = 40
+  val numberOfProjects = 2
+  val numberOfVersions = 4
   val lastVersion = s"0.$numberOfVersions"
 
 
