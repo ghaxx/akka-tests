@@ -6,6 +6,8 @@ var s = System.currentTimeMillis()
 
 def c = System.currentTimeMillis() - s
 
+import org.json4s._
+
 def a(id: Int) = {
   println(s">$id: $c")
   Thread.sleep(200)

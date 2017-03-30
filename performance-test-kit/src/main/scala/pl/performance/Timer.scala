@@ -4,12 +4,12 @@ class Timer(name: String) {
   private val formatter = java.text.NumberFormat.getIntegerInstance
   private var currentElapsed = 0L
   private var running = true
-  private var time = now
+  private var startTime = now
   def status = s"[$name] $prettyElapsed ms"
   def elapsed = {
     if (running) {
-      currentElapsed += now - time
-      time = now
+      currentElapsed += now - startTime
+      startTime = now
     }
     currentElapsed
   }
@@ -17,10 +17,10 @@ class Timer(name: String) {
     formatter.format(elapsed)
   }
 
-  def reset() = {
-    running = false
+  def restart() = {
+    running = true
     currentElapsed = 0
-    time = now
+    startTime = now
   }
 
   def stop() = {
@@ -29,14 +29,14 @@ class Timer(name: String) {
 
   def pause() = {
     if (running) {
-      currentElapsed += now - time
+      currentElapsed += now - startTime
       running = false
     }
   }
 
   def start() = {
     running = true
-    time = now
+    startTime = now
   }
 
   def measure(f: => Any): Long = {
@@ -54,7 +54,7 @@ object Timer {
   def stopped(name: String) = {
     val t = new Timer(name)
     t.stop()
-    t.reset()
+    t.restart()
     t
   }
   def measure(f: => Any): Long = {

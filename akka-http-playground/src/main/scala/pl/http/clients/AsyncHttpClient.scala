@@ -8,12 +8,12 @@ import scala.concurrent.{Await, ExecutionContext, Future, Promise}
 import scala.util.Try
 import scalaz.Scalaz._
 
-object AsyncClient extends App with ClientTestScenario {
+object AsyncHttpClient extends App with ClientTestScenario {
 
   import org.asynchttpclient._
 
   import scala.concurrent.duration._
-  import ScalaAsyncHttpClient._
+  import pl.http.client.ScalaAsyncHttpClient._
 
 //  implicit val ec = ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
 //    implicit val ec = ExecutionContext.fromExecutorService(Executors.newWorkStealingPool())
@@ -31,6 +31,7 @@ object AsyncClient extends App with ClientTestScenario {
 
   val name = "async"
   def makeRequest: Future[String] = get1.asyncExecuteAsString()
-  runTest()
 
+  runTest()
+  asyncHttpClient.close()
 }

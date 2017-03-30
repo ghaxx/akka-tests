@@ -24,13 +24,16 @@ object AkkaHttpClient extends App with ClientTestScenario {
     Http()
       .singleRequest(HttpRequest(uri = "http://localhost:8080/random"))
       .flatMap { r =>
-        println("done")
         r.entity.toStrict(3 seconds)
       }
       .map(e => e.getData.decodeString("UTF-8"))
   }
 
   val name = "akka http async"
+  /**
+    * For 50 requests:
+    * Exception in thread "main" akka.stream.BufferOverflowException: Exceeded configured max-open-requests value of [32]
+    */
   runTest()
   Await.result(system.terminate(), 10 seconds)
 

@@ -12,7 +12,7 @@ trait ClientTestScenario {
 
   def makeRequest: Future[String]
 
-  def runTest(numberOfRequests: Int = 30) = {
+  def runTest(numberOfRequests: Int = 32) = {
     val timer = Timer(name)
     println("Threads before requests: " + Thread.activeCount())
     val fResponses = (1 to numberOfRequests).map {
