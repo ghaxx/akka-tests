@@ -1,3 +1,9 @@
-trait F[+A, -B] {
-  def f[AA >: A, BB <: B](a: AA): BB
+object A {
+  def not_a = 7
 }
+
+object B {
+  def b = 8
+}
+
+B.b
