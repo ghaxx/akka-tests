@@ -61,16 +61,16 @@ object Comparator {
       def run(f1: FunctionalUnit, f2: FunctionalUnit): ComparisonResult = {
         val segments = 4
         val singleRunTries = tries / segments
-        val t1 = Timer.stopped(f1.name)
-        val t2 = Timer.stopped(f2.name)
+        val t1 = Timer(f1.name)
+        val t2 = Timer(f2.name)
         for (i <- 0 until segments) {
-          t1.start()
+          t1.restart()
           repeatIdx(singleRunTries) {
             l => f1.function(l + singleRunTries * i)
           }
           t1.pause()
 
-          t2.start()
+          t2.restart()
           repeatIdx(singleRunTries) {
             l => f1.function(l + singleRunTries * i)
           }

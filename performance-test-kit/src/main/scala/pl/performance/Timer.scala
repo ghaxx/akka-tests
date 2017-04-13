@@ -25,6 +25,7 @@ class Timer(name: String) {
 
   def stop() = {
     running = false
+    currentElapsed += now - startTime
   }
 
   def pause() = {
@@ -51,12 +52,6 @@ class Timer(name: String) {
 
 object Timer {
   def apply(name: String) = new Timer(name)
-  def stopped(name: String) = {
-    val t = new Timer(name)
-    t.stop()
-    t.restart()
-    t
-  }
   def measure(f: => Any): Long = {
     val t = new Timer("")
     f
