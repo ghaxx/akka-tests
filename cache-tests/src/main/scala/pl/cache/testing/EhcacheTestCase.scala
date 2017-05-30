@@ -13,7 +13,7 @@ class EhcacheTestCase extends TestCase {
   def warmup() = {
 
     val config = CacheConfigurationBuilder
-      .newCacheConfigurationBuilder(classOf[java.lang.Long], classOf[String], ResourcePoolsBuilder.heap(10))
+      .newCacheConfigurationBuilder(classOf[java.lang.Long], classOf[String], ResourcePoolsBuilder.heap(1000))
     //    .withKeySerializer(new Serializer[Long]{
     //      def read(binary: ByteBuffer) = binary.getLong()
     //      def serialize(`object`: Long) = ByteBuffer.wrap(`object`.toString.getBytes)

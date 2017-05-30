@@ -6,6 +6,7 @@ class TimerTest extends MyFunSpec {
 
   test("Timer should start when created") {
     val t = Timer("test")
+
     Thread.sleep(200)
     val measuredTime = t.elapsed
     measuredTime should be >= 200L
@@ -32,7 +33,7 @@ class TimerTest extends MyFunSpec {
     measuredTime should be >= 200L
     measuredTime should be <= 210L
 
-    t.reset()
+    t.restart()
     Thread.sleep(100)
     val secondMeasure = t.elapsed
     Thread.sleep(200)

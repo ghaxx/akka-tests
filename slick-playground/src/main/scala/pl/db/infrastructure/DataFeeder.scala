@@ -13,8 +13,21 @@ class DataFeeder {
 
   val to = 300 seconds
 
+  def createSchema() = {
+    val db = Database.forConfig("slick")
+    try {
+      val createTables = DBIO.seq(
+        ProjectTableQuery.schema.create,
+        ProjectVersionTableQuery.schema.create
+      )
+      Await.result(db.run(createTables), to)
+    } finally {
+      db.close()
+    }
+  }
+
   def feedAndBindLater(projectsNumber: Int, versionsPerProject: Int) = {
-    purgeData()
+//    purgeData()
     val db = Database.forConfig("slick")
     try {
       Await.result(db.run(ProjectTableQuery ++= Project.gen(projectsNumber)), to)
@@ -36,7 +49,7 @@ class DataFeeder {
     } finally db.close
   }
   def feed(projectsNumber: Int, versionsPerProject: Int) = {
-    purgeData()
+//    purgeData()
     val db = Database.forConfig("slick")
     try {
       Await.result(db.run(ProjectTableQuery ++= Project.gen(projectsNumber)), to)
@@ -57,7 +70,7 @@ class DataFeeder {
     } finally db.close
   }
   def feedSlick(projectsNumber: Int, versionsPerProject: Int) = {
-    purgeData()
+//    purgeData()
     val db = Database.forConfig("slick")
     try {
       Await.result(db.run(ProjectTableQuery ++= Project.gen(projectsNumber)), to)
@@ -77,11 +90,11 @@ class DataFeeder {
 
     } finally db.close
   }
-  def feedSlickCpl(projectsNumber: Int, versionsPerProject: Int) = {
-    purgeData()
-    val db = Database.forConfig("slick")
+  def feedSlickAndBindLater(projectsNumber: Int, versionsPerProject: Int)(implicit db: H2Profile.backend.Database) = {
+//    purgeData()
+//    val db = Database.forConfig("slick")
     try {
-      Await.result(db.run(ProjectTableQuery ++= Project.gen(projectsNumber)), to)
+      Await.result(db.run((ProjectTableQuery ++= Project.gen(projectsNumber))), to)
 
       val feedVersions = for {
         projects <- db.run(ProjectTableQuery.result)
@@ -97,7 +110,9 @@ class DataFeeder {
       }
       Await.result(feedVersions, to)
 
-    } finally db.close
+    } finally {
+//      db.close
+    }
   }
 
   def purgeData() = {

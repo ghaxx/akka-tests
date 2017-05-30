@@ -47,7 +47,7 @@ class ProjectTableQuerySpec extends UnitSpec {
   it("should feed and update with each row using Slick cpl") {
     new DataFeeder().purgeData()
     val e = Timer.measure {
-      new DataFeeder().feedSlickCpl(numberOfProjects, numberOfVersions)
+      new DataFeeder().feedSlickAndBindLater(numberOfProjects, numberOfVersions)(null)
     }
     info(s"it took $e")
   }

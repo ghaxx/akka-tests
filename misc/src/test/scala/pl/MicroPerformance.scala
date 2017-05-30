@@ -43,7 +43,7 @@ class MicroPerformance(specimen1: TestSpecimen, specimen2: TestSpecimen, config:
     val globalTimer = Timer(specimen.name)
     val localTimer = Timer("local")
     while (globalTimer.elapsed <= config.timeToSpare.toNanos / 2) {
-      localTimer.reset()
+      localTimer.restart()
       try {
         specimen.subject()
       } catch {

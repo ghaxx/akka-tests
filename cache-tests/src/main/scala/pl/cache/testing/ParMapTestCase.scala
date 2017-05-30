@@ -4,7 +4,7 @@ import pl.performance.Timer
 
 class ParMapTestCase extends TestCase {
   var m = scala.collection.parallel.mutable.ParHashMap.empty[Long, String]
-  def name = "ParMap"
+  def name = "ParHashMap"
   def warmup() = {
     m = scala.collection.parallel.mutable.ParHashMap.empty[Long, String]
     (1L to 100).foreach { i =>

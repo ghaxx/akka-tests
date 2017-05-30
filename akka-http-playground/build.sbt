@@ -5,7 +5,8 @@ val akkaStreamsVersion = "2.4.16"
 val scalazVersion = "7.2.8"
 
 libraryDependencies ++= Seq(
-  "com.typesafe.akka" %% "akka-http" % "10.0.1" ,
+  "com.typesafe.akka" %% "akka-http" % "10.0.5" ,
+  "com.typesafe.akka" %% "akka-http-spray-json" % "10.0.5" ,
   "org.scalaz" %% "scalaz-core" % scalazVersion,
   "org.scalatest" %% "scalatest" % "3.0.0" % "test",
   "ch.qos.logback" % "logback-classic" % "1.1.8",

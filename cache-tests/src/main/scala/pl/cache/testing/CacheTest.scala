@@ -17,13 +17,15 @@ object CacheTest extends App {
       println(s"Size: $n")
       val results = cases.foldLeft(Map.empty[String, List[Long]]) {
         (results, testCase) =>
-          val times = (1 to 3).foldLeft(List.empty[Long]) {
+          val times = (1 to 4).foldLeft(List.empty[Long]) {
             (times, _) => testCase.run(n) :: times
           }
           results.updated(testCase.name, times)
       }
       results.toList.sortBy(_._1).foreach {
-        case (name, times) => println(f"  $name%10s: ${times.mkString(", ")} -> ${times.sum / times.length}")
+        case (name, times) =>
+//          println(f"  $name%20s: ${times.mkString(", ")} -> ${times.sum / times.length}")
+          println(f"  ${name.padTo(20, " ").mkString}: ${times.mkString(", ")} -> ${times.sum / times.length}")
       }
   }
 

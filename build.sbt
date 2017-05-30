@@ -6,21 +6,21 @@ scalaVersion in ThisBuild := "2.12.1"
 lazy val `scala-tests` = project.in(file("."))
   .settings(
     name := "Scala Tests",
-    version := "1.0",
-    assemblyShadeRules in assembly := Seq(
+    version := "1.0"
+//    assemblyShadeRules in assembly := Seq(
 //      ShadeRule.zap("ch.**", "scala.**", "com.**").inAll,
-      ShadeRule.rename("org.json4s.**" -> "rm.org.json4s.@1").inAll,
-      ShadeRule.keep("**").inProject,
-      ShadeRule.keep("pl.**", "rm.**", "org.json4s.**").inAll
-    )
+//      ShadeRule.rename("org.json4s.**" -> "rm.org.json4s.@1").inAll,
+//      ShadeRule.keep("**").inProject,
+//      ShadeRule.keep("pl.**", "rm.**", "org.json4s.**").inAll
+//    )
   )
 
-artifact in(Compile, assembly) := {
-  val art = (artifact in(Compile, assembly)).value
-  art.copy(`classifier` = Some("assembly"))
-}
+//artifact in(Compile, assembly) := {
+//  val art = (artifact in(Compile, assembly)).value
+//  art.copy(`classifier` = Some("assembly"))
+//}
 
-addArtifact(artifact in(Compile, assembly), assembly)
+//addArtifact(artifact in(Compile, assembly), assembly)
 
 lazy val `akka-actors-playground` = project
 lazy val `akka-http-playground` = project.dependsOn(`performance-test-kit`, `scala-async-http-client`)

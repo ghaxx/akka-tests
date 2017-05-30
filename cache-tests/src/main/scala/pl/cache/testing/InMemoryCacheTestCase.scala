@@ -6,7 +6,7 @@ import pl.performance.Timer
 class InMemoryCacheTestCase extends TestCase {
   import InMemoryMultiCache._
   var m = new InMemoryMultiCache(1000)
-  def name = "InMemory"
+  def name = "Own implementation"
   def warmup() = {
     (1L to 100).foreach { i =>
       m.put("terefere" + i)
