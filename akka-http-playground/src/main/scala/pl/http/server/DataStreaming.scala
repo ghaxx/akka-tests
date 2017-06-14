@@ -18,7 +18,8 @@ class DataStreaming {
   val route = path("stream" / "json" / LongNumber) { size =>
     complete(jsonStream(size))
   } ~ path("stream" / "numbers" / LongNumber) { size =>
-    complete(numberStream(size))
+//    complete(numberStream(size))
+    complete("OK")
   }
 
  private  def jsonStream(size: Long): Source[ANumber, NotUsed] =

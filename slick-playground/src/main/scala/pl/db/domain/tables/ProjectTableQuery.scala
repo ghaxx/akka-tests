@@ -25,4 +25,8 @@ object ProjectTableQuery extends TableQuery(new ProjectTable(_)) {
       m <- ProjectVersionTableQuery if m.id === p.latestVersionId
     } yield (p, m)
   }
+
+  val c = Compiled {
+    ProjectVersionTableQuery.sortBy(_.releaseDate.asc)
+  }
 }

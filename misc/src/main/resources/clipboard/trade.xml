@@ -1,0 +1,320 @@
+<maml:maml version="1-1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:maml="http://www.messageautomation.com/schemas/maml/v1" xmlns:fpml="http://www.fpml.org/FpML-5/confirmation">
+    <maml:headers>
+        <maml:messageHeader>
+            <maml:messageProperties>
+                <maml:messageId messageIdScheme="http://www.messageautomation.com/coding-schemes/v1/message-id">LCH-TST-KUBA-001</maml:messageId>
+                <maml:conversationId conversationIdScheme="http://www.messageautomation.com/coding-schemes/v1/conversation-id">LCH-LCH5.TST-KUBA-001</maml:conversationId>
+                <maml:sentBy partyIdScheme="http://www.messageautomation.com/coding-schemes/v1/clearing-house">LCH-SCM</maml:sentBy>
+                <maml:sendTo partyIdScheme="http://www.messageautomation.com/coding-schemes/v1/LCH-party-id">MIDLGB22</maml:sendTo>
+                <maml:timestamps>
+                    <maml:creation>2017-05-08T10:47:27.000+00:00</maml:creation>
+                </maml:timestamps>
+            </maml:messageProperties>
+            <maml:systems>
+                <maml:system id="clearingHouseSystem">
+                    <maml:identifier>
+                        <maml:value identifierScheme="http://www.messageautomation.com/coding-schemes/v1/clearing-house">LCH</maml:value>
+                    </maml:identifier>
+                </maml:system>
+                <maml:system id="tradeSourceSystem">
+                    <maml:identifier>
+                        <maml:value identifierScheme="http://www.messageautomation.com/coding-schemes/v1/LCH-system-id">SWAPSWIRE</maml:value>
+                    </maml:identifier>
+                </maml:system>
+            </maml:systems>
+        </maml:messageHeader>
+        <maml:eventHeader>
+            <maml:action eventActionScheme="http://www.messageautomation.com/coding-schemes/v1/clearing/event-action">New</maml:action>
+            <maml:type eventTypeScheme="http://www.messageautomation.com/coding-schemes/v1/clearing/event-type">TradeInput</maml:type>
+            <maml:workflows>
+                <maml:workflow>
+                    <maml:workflowName workflowNameScheme="http://www.messageautomation.com/coding-schemes/v1/clearing/workflow-name">LCHFCMClearing</maml:workflowName>
+                    <maml:action workflowActionScheme="http://www.messageautomation.com/coding-schemes/v1/clearing/workflow-action">RequestConsent</maml:action>
+                    <maml:currentState>
+                        <maml:state workflowStateScheme="http://www.messageautomation.com/coding-schemes/v1/clearing/workflow-state">Completed</maml:state>
+                    </maml:currentState>
+                </maml:workflow>
+            </maml:workflows>
+        </maml:eventHeader>
+        <maml:tradeHeader>
+            <maml:involvedParties>
+                <maml:involvedParty>
+                    <maml:party href="clearingBrokerB"/>
+                    <maml:involvedPartyRole roleNameScheme="http://www.messageautomation.com/coding-schemes/v1/clearing/involved-party-role">Clearer</maml:involvedPartyRole>
+                </maml:involvedParty>
+                <maml:involvedParty>
+                    <maml:party href="partyA"/>
+                    <maml:involvedPartyRole roleNameScheme="http://www.messageautomation.com/coding-schemes/v1/clearing/involved-party-role">ClearingHouse</maml:involvedPartyRole>
+                </maml:involvedParty>
+                <maml:involvedParty>
+                    <maml:party href="partyB"/>
+                    <maml:involvedPartyRole roleNameScheme="http://www.messageautomation.com/coding-schemes/v1/clearing/involved-party-role">Client</maml:involvedPartyRole>
+                </maml:involvedParty>
+                <maml:involvedParty>
+                    <maml:party href="partyC"/>
+                    <maml:involvedPartyRole roleNameScheme="http://www.messageautomation.com/coding-schemes/v1/clearing/involved-party-role">TradeSource</maml:involvedPartyRole>
+                </maml:involvedParty>
+            </maml:involvedParties>
+            <maml:involvedSystems>
+                <maml:involvedSystem>
+                    <maml:system href="clearingHouseSystem"/>
+                    <maml:involvedSystemRole roleNameScheme="http://www.messageautomation.com/coding-schemes/v1/clearing/involved-system-role">ClearingHouse</maml:involvedSystemRole>
+                </maml:involvedSystem>
+                <maml:involvedSystem>
+                    <maml:system href="tradeSourceSystem"/>
+                    <maml:involvedSystemRole roleNameScheme="http://www.messageautomation.com/coding-schemes/v1/clearing/involved-system-role">TradeSource</maml:involvedSystemRole>
+                </maml:involvedSystem>
+            </maml:involvedSystems>
+        </maml:tradeHeader>
+    </maml:headers>
+    <maml:businessEvents>
+        <maml:requests>
+            <maml:requestDetails>
+                <maml:tradeIdentifiers>
+                    <maml:tradeIdentifier>
+                        <maml:ownedByParty href="partyA"/>
+                        <maml:identifier>
+                            <maml:value identifierScheme="http://www.messageautomation.com/coding-schemes/v1/trade-id">LCH-TST-KUBA-001</maml:value>
+                            <maml:type identifierTypeScheme="http://www.messageautomation.com/coding-schemes/v1/clearing/identifier-type">PrimaryTradeIdentifier</maml:type>
+                        </maml:identifier>
+                    </maml:tradeIdentifier>
+                </maml:tradeIdentifiers>
+            </maml:requestDetails>
+            <fpml:requestConsent fpmlVersion="5-7">
+                <fpml:header>
+                    <fpml:messageId messageIdScheme="http://www.messageautomation.com/coding-schemes/v1/LCH-message-id">TST-KUBA-001</fpml:messageId>
+                    <fpml:sentBy messageAddressScheme="http://www.messageautomation.com/coding-schemes/v1/clearing-house">LCHLGB2L</fpml:sentBy>
+                    <fpml:sendTo messageAddressScheme="http://www.messageautomation.com/coding-schemes/v1/LCH-party-id">MIDLGB22</fpml:sendTo>
+                    <fpml:creationTimestamp>2017-05-08T10:47:27.000+00:00</fpml:creationTimestamp>
+                </fpml:header>
+                <fpml:isCorrection>false</fpml:isCorrection>
+                <fpml:correlationId correlationIdScheme="http://www.lchclearnet.com/clearlink/coding-scheme/correlation-id">LCH5.TST-KUBA-001</fpml:correlationId>
+                <fpml:sequenceNumber>1</fpml:sequenceNumber>
+                <fpml:requestedAction requestedActionScheme="http://www.messageautomation.com/coding-schemes/v1/clearing/requested-action">Clearing</fpml:requestedAction>
+                <fpml:originatingEvent originatingEventScheme="http://www.messageautomation.com/coding-schemes/v1/clearing/originating-event">Trade</fpml:originatingEvent>
+                <fpml:trade>
+                    <fpml:tradeHeader>
+                        <fpml:partyTradeIdentifier>
+                            <fpml:issuer issuerIdScheme="http://www.fpml.org/coding-scheme/external/cftc/issuer-identifier">1010000051</fpml:issuer>
+                            <fpml:tradeId tradeIdScheme="http://www.fpml.org/coding-scheme/external/unique-transaction-identifier">SW10000000LCH0002206297812149061</fpml:tradeId>
+                        </fpml:partyTradeIdentifier>
+                        <fpml:partyTradeIdentifier>
+                            <fpml:issuer issuerIdScheme="http://www.fpml.org/coding-scheme/external/issuer-identifier">1010000051</fpml:issuer>
+                            <fpml:tradeId tradeIdScheme="http://www.fpml.org/coding-scheme/external/unique-transaction-identifier">SW10000000LCH0002206297812149061</fpml:tradeId>
+                        </fpml:partyTradeIdentifier>
+                        <fpml:partyTradeIdentifier>
+                            <fpml:partyReference href="partyA"/>
+                            <fpml:tradeId tradeIdScheme="http://www.messageautomation.com/coding-schemes/v1/trade-id">TST-KUBA-001</fpml:tradeId>
+                        </fpml:partyTradeIdentifier>
+                        <fpml:partyTradeIdentifier>
+                            <fpml:partyReference href="partyB"/>
+                            <fpml:tradeId tradeIdScheme="http://www.messageautomation.com/coding-schemes/v1/trade-id">TST-KUBA-001-2</fpml:tradeId>
+                        </fpml:partyTradeIdentifier>
+                        <fpml:partyTradeIdentifier>
+                            <fpml:partyReference href="partyC"/>
+                            <fpml:tradeId tradeIdScheme="http://www.messageautomation.com/coding-schemes/v1/trade-id">TST-KUBA-001</fpml:tradeId>
+                        </fpml:partyTradeIdentifier>
+                        <fpml:partyTradeInformation>
+                            <fpml:partyReference href="partyA"/>
+                            <fpml:reportingRegime>
+                                <fpml:name reportingRegimeNameScheme="http://www.fpml.org/coding-scheme/reporting-regime">DF</fpml:name>
+                                <fpml:supervisorRegistration>
+                                    <fpml:supervisoryBody supervisoryBodyScheme="http://www.fpml.org/coding-scheme/supervisory-body">CFTC</fpml:supervisoryBody>
+                                </fpml:supervisorRegistration>
+                            </fpml:reportingRegime>
+                            <fpml:reportingRegime>
+                                <fpml:name reportingRegimeNameScheme="http://www.fpml.org/coding-scheme/reporting-regime">EMIR</fpml:name>
+                                <fpml:supervisorRegistration>
+                                    <fpml:supervisoryBody supervisoryBodyScheme="http://www.fpml.org/coding-scheme/supervisory-body">ESMA</fpml:supervisoryBody>
+                                </fpml:supervisorRegistration>
+                            </fpml:reportingRegime>
+                        </fpml:partyTradeInformation>
+                        <fpml:partyTradeInformation>
+                            <fpml:partyReference href="partyB"/>
+                            <fpml:relatedParty>
+                                <fpml:partyReference href="clearingBrokerB"/>
+                                <fpml:role partyRoleScheme="http://www.messageautomation.com/coding-schemes/v1/clearing/party-role">ClearingBroker</fpml:role>
+                            </fpml:relatedParty>
+                            <fpml:relatedParty>
+                                <fpml:partyReference href="partyC"/>
+                                <fpml:role partyRoleScheme="http://www.messageautomation.com/coding-schemes/v1/clearing/party-role">TradeSource</fpml:role>
+                            </fpml:relatedParty>
+                            <fpml:relatedParty>
+                                <fpml:partyReference href="partyA"/>
+                                <fpml:role partyRoleScheme="http://www.messageautomation.com/coding-schemes/v1/clearing/party-role">Clearer</fpml:role>
+                            </fpml:relatedParty>
+                            <fpml:executionDateTime>2017-05-08T10:47:13Z</fpml:executionDateTime>
+                            <fpml:executionVenueType>OffFacility</fpml:executionVenueType>
+                        </fpml:partyTradeInformation>
+                        <fpml:tradeDate>2016-06-16</fpml:tradeDate>
+                    </fpml:tradeHeader>
+                    <fpml:swap>
+                        <fpml:productType productTypeScheme="http://www.fpml.org/coding-scheme/product-taxonomy">InterestRate:IRSwap:OIS</fpml:productType>
+                        <fpml:swapStream id="floatingLeg">
+                            <fpml:payerPartyReference href="partyA"/>
+                            <fpml:receiverPartyReference href="partyB"/>
+                            <fpml:calculationPeriodDates id="floatingLegCalcPeriodDates">
+                                <fpml:effectiveDate>
+                                    <fpml:unadjustedDate>2016-06-16</fpml:unadjustedDate>
+                                    <fpml:dateAdjustments>
+                                        <fpml:businessDayConvention>NONE</fpml:businessDayConvention>
+                                    </fpml:dateAdjustments>
+                                </fpml:effectiveDate>
+                                <fpml:terminationDate>
+                                    <fpml:unadjustedDate>2017-06-16</fpml:unadjustedDate>
+                                    <fpml:dateAdjustments>
+                                        <fpml:businessDayConvention>MODFOLLOWING</fpml:businessDayConvention>
+                                        <fpml:businessCenters>
+                                            <fpml:businessCenter>GBLO</fpml:businessCenter>
+                                        </fpml:businessCenters>
+                                    </fpml:dateAdjustments>
+                                </fpml:terminationDate>
+                                <fpml:calculationPeriodDatesAdjustments>
+                                    <fpml:businessDayConvention>MODFOLLOWING</fpml:businessDayConvention>
+                                    <fpml:businessCenters>
+                                        <fpml:businessCenter>GBLO</fpml:businessCenter>
+                                    </fpml:businessCenters>
+                                </fpml:calculationPeriodDatesAdjustments>
+                                <fpml:calculationPeriodFrequency>
+                                    <fpml:periodMultiplier>1</fpml:periodMultiplier>
+                                    <fpml:period>Y</fpml:period>
+                                    <fpml:rollConvention>16</fpml:rollConvention>
+                                </fpml:calculationPeriodFrequency>
+                            </fpml:calculationPeriodDates>
+                            <fpml:paymentDates id="floatingLegPaymentDates">
+                                <fpml:calculationPeriodDatesReference href="floatingLegCalcPeriodDates"/>
+                                <fpml:paymentFrequency>
+                                    <fpml:periodMultiplier>1</fpml:periodMultiplier>
+                                    <fpml:period>Y</fpml:period>
+                                </fpml:paymentFrequency>
+                                <fpml:payRelativeTo>CalculationPeriodEndDate</fpml:payRelativeTo>
+                                <fpml:paymentDatesAdjustments>
+                                    <fpml:businessDayConvention>MODFOLLOWING</fpml:businessDayConvention>
+                                    <fpml:businessCenters>
+                                        <fpml:businessCenter>GBLO</fpml:businessCenter>
+                                    </fpml:businessCenters>
+                                </fpml:paymentDatesAdjustments>
+                            </fpml:paymentDates>
+                            <fpml:resetDates id="floatingLegResetDates">
+                                <fpml:calculationPeriodDatesReference href="floatingLegCalcPeriodDates"/>
+                                <fpml:resetRelativeTo>CalculationPeriodEndDate</fpml:resetRelativeTo>
+                                <fpml:fixingDates>
+                                    <fpml:periodMultiplier>0</fpml:periodMultiplier>
+                                    <fpml:period>D</fpml:period>
+                                    <fpml:businessDayConvention>PRECEDING</fpml:businessDayConvention>
+                                    <fpml:businessCenters>
+                                        <fpml:businessCenter>GBLO</fpml:businessCenter>
+                                    </fpml:businessCenters>
+                                    <fpml:dateRelativeTo href="floatingLegResetDates"/>
+                                </fpml:fixingDates>
+                                <fpml:resetFrequency>
+                                    <fpml:periodMultiplier>1</fpml:periodMultiplier>
+                                    <fpml:period>Y</fpml:period>
+                                </fpml:resetFrequency>
+                                <fpml:resetDatesAdjustments>
+                                    <fpml:businessDayConvention>MODFOLLOWING</fpml:businessDayConvention>
+                                    <fpml:businessCenters>
+                                        <fpml:businessCenter>GBLO</fpml:businessCenter>
+                                    </fpml:businessCenters>
+                                </fpml:resetDatesAdjustments>
+                            </fpml:resetDates>
+                            <fpml:calculationPeriodAmount>
+                                <fpml:calculation>
+                                    <fpml:notionalSchedule>
+                                        <fpml:notionalStepSchedule>
+                                            <fpml:initialValue>60000000</fpml:initialValue>
+                                            <fpml:currency>GBP</fpml:currency>
+                                        </fpml:notionalStepSchedule>
+                                    </fpml:notionalSchedule>
+                                    <fpml:floatingRateCalculation>
+                                        <fpml:floatingRateIndex>GBP-WMBA-SONIA-COMPOUND</fpml:floatingRateIndex>
+                                    </fpml:floatingRateCalculation>
+                                    <fpml:dayCountFraction>ACT/365.FIXED</fpml:dayCountFraction>
+                                </fpml:calculation>
+                            </fpml:calculationPeriodAmount>
+                        </fpml:swapStream>
+                        <fpml:swapStream id="fixedLeg">
+                            <fpml:payerPartyReference href="partyB"/>
+                            <fpml:receiverPartyReference href="partyA"/>
+                            <fpml:calculationPeriodDates id="fixedLegCalcPeriodDates">
+                                <fpml:effectiveDate>
+                                    <fpml:unadjustedDate>2016-06-16</fpml:unadjustedDate>
+                                    <fpml:dateAdjustments>
+                                        <fpml:businessDayConvention>NONE</fpml:businessDayConvention>
+                                    </fpml:dateAdjustments>
+                                </fpml:effectiveDate>
+                                <fpml:terminationDate>
+                                    <fpml:unadjustedDate>2017-06-16</fpml:unadjustedDate>
+                                    <fpml:dateAdjustments>
+                                        <fpml:businessDayConvention>MODFOLLOWING</fpml:businessDayConvention>
+                                        <fpml:businessCenters>
+                                            <fpml:businessCenter>GBLO</fpml:businessCenter>
+                                        </fpml:businessCenters>
+                                    </fpml:dateAdjustments>
+                                </fpml:terminationDate>
+                                <fpml:calculationPeriodDatesAdjustments>
+                                    <fpml:businessDayConvention>MODFOLLOWING</fpml:businessDayConvention>
+                                    <fpml:businessCenters>
+                                        <fpml:businessCenter>GBLO</fpml:businessCenter>
+                                    </fpml:businessCenters>
+                                </fpml:calculationPeriodDatesAdjustments>
+                                <fpml:calculationPeriodFrequency>
+                                    <fpml:periodMultiplier>1</fpml:periodMultiplier>
+                                    <fpml:period>Y</fpml:period>
+                                    <fpml:rollConvention>16</fpml:rollConvention>
+                                </fpml:calculationPeriodFrequency>
+                            </fpml:calculationPeriodDates>
+                            <fpml:paymentDates id="fixedLegPaymentDates">
+                                <fpml:calculationPeriodDatesReference href="fixedLegCalcPeriodDates"/>
+                                <fpml:paymentFrequency>
+                                    <fpml:periodMultiplier>1</fpml:periodMultiplier>
+                                    <fpml:period>Y</fpml:period>
+                                </fpml:paymentFrequency>
+                                <fpml:payRelativeTo>CalculationPeriodEndDate</fpml:payRelativeTo>
+                                <fpml:paymentDatesAdjustments>
+                                    <fpml:businessDayConvention>MODFOLLOWING</fpml:businessDayConvention>
+                                    <fpml:businessCenters>
+                                        <fpml:businessCenter>GBLO</fpml:businessCenter>
+                                    </fpml:businessCenters>
+                                </fpml:paymentDatesAdjustments>
+                            </fpml:paymentDates>
+                            <fpml:calculationPeriodAmount>
+                                <fpml:calculation>
+                                    <fpml:notionalSchedule>
+                                        <fpml:notionalStepSchedule>
+                                            <fpml:initialValue>%initialValue%</fpml:initialValue>
+                                            <fpml:currency>GBP</fpml:currency>
+                                        </fpml:notionalStepSchedule>
+                                    </fpml:notionalSchedule>
+                                    <fpml:fixedRateSchedule>
+                                        <fpml:initialValue>1000000</fpml:initialValue>
+                                    </fpml:fixedRateSchedule>
+                                    <fpml:dayCountFraction>ACT/365.FIXED</fpml:dayCountFraction>
+                                </fpml:calculation>
+                            </fpml:calculationPeriodAmount>
+                        </fpml:swapStream>
+                    </fpml:swap>
+                    <fpml:documentation>
+                        <fpml:masterAgreement>
+                            <fpml:masterAgreementType masterAgreementTypeScheme="http://www.fpml.org/coding-scheme/master-agreement-type">ISDA</fpml:masterAgreementType>
+                        </fpml:masterAgreement>
+                        <fpml:contractualDefinitions contractualDefinitionsScheme="http://www.fpml.org/coding-scheme/contractual-definitions">ISDA2006</fpml:contractualDefinitions>
+                    </fpml:documentation>
+                </fpml:trade>
+                <fpml:party id="partyA">
+                    <fpml:partyId partyIdScheme="http://www.messageautomation.com/coding-schemes/v1/clearing-house">LCHLGB2L</fpml:partyId>
+                    <fpml:partyId partyIdScheme="http://www.fpml.org/coding-scheme/external/iso17442">F226TOH6YD6XJB17KS62</fpml:partyId>
+                </fpml:party>
+                <fpml:party id="partyB">
+                    <fpml:partyId partyIdScheme="http://www.messageautomation.com/coding-schemes/v1/LCH-party-id">GIGA_CCTEST53</fpml:partyId>
+                </fpml:party>
+                <fpml:party id="partyC">
+                    <fpml:partyId partyIdScheme="http://www.messageautomation.com/coding-schemes/v1/LCH-party-id">SWAPSWIRE</fpml:partyId>
+                </fpml:party>
+                <fpml:party id="clearingBrokerB">
+                    <fpml:partyId partyIdScheme="http://www.messageautomation.com/coding-schemes/v1/LCH-party-id">MIDLGB22</fpml:partyId>
+                </fpml:party>
+            </fpml:requestConsent>
+        </maml:requests>
+    </maml:businessEvents>
+</maml:maml>
