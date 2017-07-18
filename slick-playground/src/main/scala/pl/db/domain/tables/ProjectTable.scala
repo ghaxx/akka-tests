@@ -13,6 +13,5 @@ class ProjectTable(tag: Tag) extends Table[Project](tag, "PROJECT") {
 
   def * = (id, name, author, description, latestVersionId) <> ((Project.apply _).tupled, Project.unapply)
 
-
 }
 

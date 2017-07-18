@@ -1,4 +1,4 @@
-name := "Akka HTTP Playground"
+name := "akka-http-playground"
 version := "1.0"
 
 val akkaStreamsVersion = "2.4.16"
@@ -17,7 +17,8 @@ libraryDependencies ++= Seq(
   "org.asynchttpclient" % "async-http-client" % "2.0.29",
   "org.apache.httpcomponents" % "httpasyncclient" % "4.1.3",
   "commons-io" % "commons-io" % "2.5",
-  "com.squareup.okhttp3" % "okhttp" % "3.6.0"
+  "com.squareup.okhttp3" % "okhttp" % "3.6.0",
+  "commons-io" % "commons-io" % "2.4"
 )
 
 resolvers += "Tim Tennant's repo" at "http://dl.bintray.com/timt/repo/"

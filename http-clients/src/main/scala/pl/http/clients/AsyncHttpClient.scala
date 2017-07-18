@@ -7,10 +7,10 @@ import pl.performance.Timer
 import scala.concurrent.{Await, ExecutionContext, Future, Promise}
 import scala.util.Try
 import scalaz.Scalaz._
+import org.asynchttpclient._
 
 object AsyncHttpClient extends App with ClientTestScenario {
 
-  import org.asynchttpclient._
 
   import scala.concurrent.duration._
   import pl.http.client.ScalaAsyncHttpClient._
@@ -22,7 +22,8 @@ object AsyncHttpClient extends App with ClientTestScenario {
 
 
   val cf = new DefaultAsyncHttpClientConfig.Builder()
-    .setIoThreadsCount(1)
+    .setIoThreadsCount(2)
+//    .setMaxConnections(1)
     .build()
   val asyncHttpClient = new DefaultAsyncHttpClient(cf)
   //  val asyncHttpClient = new DefaultAsyncHttpClient()

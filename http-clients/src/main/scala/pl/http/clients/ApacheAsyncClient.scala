@@ -1,18 +1,18 @@
 package pl.http.clients
 
-import java.util.concurrent.Executors
+import java.util.concurrent.{Executors, ThreadFactory}
 
+import io.netty.util.concurrent.DefaultThreadFactory
 import org.apache.commons.io.IOUtils
 
 import scala.concurrent.{ExecutionContext, Future, Promise}
 import org.apache.http.HttpResponse
 import org.apache.http.client.methods.{HttpGet, HttpRequestBase}
 import org.apache.http.concurrent.FutureCallback
-import org.apache.http.impl.nio.client.CloseableHttpAsyncClient
-import org.apache.http.impl.nio.client.HttpAsyncClients
+import org.apache.http.impl.nio.client.{CloseableHttpAsyncClient, HttpAsyncClientBuilder, HttpAsyncClients}
 import org.apache.http.nio.client.HttpAsyncClient
 import org.asynchttpclient.{Request, Response}
-import pl.http.client.ScalaAsyncHttpClient.PromiseAsyncCompletionHandler;
+import pl.http.client.ScalaAsyncHttpClient.PromiseAsyncCompletionHandler
 
 object ApacheAsyncClient extends App with ClientTestScenario {
 
@@ -45,7 +45,8 @@ object ApacheAsyncClient extends App with ClientTestScenario {
   }
 
 
-  val httpClient = HttpAsyncClients.createDefault()
+  val httpClient = HttpAsyncClients.createPipelining()
+//  val httpClient = HttpAsyncClients.createDefault()
   httpClient.start()
   val get1 = new HttpGet("http://localhost:8080/count")
 

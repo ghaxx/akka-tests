@@ -9,6 +9,7 @@ import akka.event.Logging.LogLevel
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.common.{EntityStreamingSupport, JsonEntityStreamingSupport}
 import akka.http.scaladsl.marshalling.{ToResponseMarshallable, ToResponseMarshaller}
+import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.{Flow, Source}
@@ -22,7 +23,7 @@ import scala.concurrent.duration._
 import scala.io.StdIn
 import scala.util.Random
 
-object ExampleServer extends App with LazyLogging {
+object ExampleServer extends App with CorsSupport with LazyLogging {
   implicit val system = ActorSystem("main-system", ConfigFactory.parseResources("akka-server.conf"))
   implicit val timeout = Timeout(3 seconds)
   implicit val materializer = ActorMaterializer()
@@ -52,7 +53,7 @@ object ExampleServer extends App with LazyLogging {
       } ~ dataStreaming.route
     }
 
-  val bindingFuture = Http().bindAndHandle(route, "localhost", 8080)
+  val bindingFuture = Http().bindAndHandle(corsHandler(route), "localhost", 8080)
 
   logger.info("Server online at http://localhost:8080")
   logger.info("Press RETURN to stop")
