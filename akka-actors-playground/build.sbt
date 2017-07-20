@@ -1,11 +1,12 @@
 name := "Akka Actors Playground"
 version := "1.0"
 
-val akkaStreamsVersion = "2.4.16"
+val akkaVersion = "2.4.16"
 
 libraryDependencies ++= Seq(
-  "com.typesafe.akka" %% "akka-actor" % akkaStreamsVersion,
-  "com.typesafe.akka" %% "akka-remote" % akkaStreamsVersion
+  "com.typesafe.akka" %% "akka-actor" % akkaVersion,
+  "com.typesafe.akka" %% "akka-remote" % akkaVersion,
+  "com.typesafe.akka" %% "akka-slf4j" % akkaVersion
   //  "com.typesafe.akka" %% "akka-typed-experimental" % akkaStreamsVersion,
 )
 

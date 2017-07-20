@@ -20,7 +20,7 @@ import scala.concurrent.duration._
 import scala.io.StdIn
 import scala.util.{Random, Try}
 
-object ExampleSslServer extends App with LazyLogging with `TLS-Session-Info` {
+object ExampleSslServer extends App with LazyLogging {
   implicit val system = ActorSystem("main-system", ConfigFactory.parseResources("akka-server.conf"))
   implicit val timeout = Timeout(3 seconds)
   implicit val materializer = ActorMaterializer()
