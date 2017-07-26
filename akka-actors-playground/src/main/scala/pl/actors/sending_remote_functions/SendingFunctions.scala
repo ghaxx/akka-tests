@@ -1,14 +1,13 @@
-package pl.actors
+package pl.actors.sending_remote_functions
 
 import java.io.{ByteArrayOutputStream, ObjectOutputStream}
 
 import akka.actor.{Actor, ActorLogging, ActorSystem, Props}
 import com.typesafe.config.ConfigFactory
-import pl.actors.ReceivingFunctions.system
 
 object SendingFunctions extends App {
 
-  val system = ActorSystem("Test-Akka-2", ConfigFactory.parseResources("akka-remote2.conf"))
+  val system = ActorSystem("Test-Akka-2", ConfigFactory.parseResources("pl/actors/sending_remote_functions/akka-remote2.conf"))
   system.actorOf(Props[B], "b")
   system.actorSelection("akka.tcp://Test-Akka-2@127.0.0.1:2552/user/b") ! "ping"
   val actor = system.actorSelection("akka.tcp://Test-Akka@127.0.0.1:2551/user/a")

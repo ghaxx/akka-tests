@@ -26,6 +26,7 @@ lazy val `scala-tests` = project.in(file("."))
 lazy val `akka-actors-playground` = project
 lazy val `http-clients` = project.dependsOn(`performance-test-kit`, `scala-async-http-client`)
 lazy val `akka-http-playground` = project
+lazy val `static-resources-server` = project
 lazy val `spray-playground` = project
 lazy val `cache-tests` = project.dependsOn(`performance-test-kit`)
 lazy val `performance-test-kit` = project

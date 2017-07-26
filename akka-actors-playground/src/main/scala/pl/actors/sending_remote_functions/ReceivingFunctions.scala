@@ -1,12 +1,11 @@
-package pl.actors
+package pl.actors.sending_remote_functions
 
 import akka.actor.{Actor, ActorLogging, ActorSystem, Props}
 import com.typesafe.config.ConfigFactory
-import pl.actors.SendingFunctions.system
 
 object ReceivingFunctions extends App {
 
-  val system = ActorSystem("Test-Akka", ConfigFactory.parseResources("akka-remote.conf"))
+  val system = ActorSystem("Test-Akka", ConfigFactory.parseResources("pl/actors/sending_remote_functions/akka-remote.conf"))
   system.actorOf(Props[A], "a")
   system.actorSelection("akka.tcp://Test-Akka@127.0.0.1:2551/user/a") ! "ping"
 

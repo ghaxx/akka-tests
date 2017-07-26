@@ -1,6 +1,7 @@
 package pl.shapes
 
 import shapeless._
+import shapeless.ops.hlist.Reverse
 
 object Shapes extends App {
 
@@ -29,7 +30,7 @@ object Shapes extends App {
     def apply[F](f: F)(
       implicit fp: FnToProduct.Aux[F, Types => Out]
     ) = {
-      val a: Types = sources.foldLeft[HList](HNil)((m, v) ⇒ v.get :: m).asInstanceOf[Types]
+      val a: Types = sources.foldRight[HList](HNil)((v, m) ⇒ v.get :: m).asInstanceOf[Types]
       f.toProduct(a)
     }
   }
@@ -38,17 +39,19 @@ object Shapes extends App {
     def withOption[T](o: Option[T]) = Summer[T :: HNil, AnyVal](o :: Nil)
   }
 
-  //    Summer[Int :: Int :: HNil](Some(1) :: Some(2) :: Nil).apply {
-  //      (x: Int, y: Int) ⇒ println((x, y))
-  //    }
+  case class D(v: Int)
+
+  Summer[Int :: D :: HNil, Unit](Some(1) :: Some(D(9)) :: Nil).apply {
+    (x: Int, y: D) ⇒ println((x, y))
+  }
 
   val r = Summer
     .withOption(Some(1))
     .withOption(Some(2))
-    .withOption(Some(3))
+    .withOption(Some(D(3)))
     .withOutput[Unit]
     .apply {
-      (x: Int, y: Int, z: Int) ⇒ println(x + y + z)
+      (x: D, y: Int, z: Int) ⇒ println(s"$x, $y, $z")
     }
 
   println(r)

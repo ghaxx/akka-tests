@@ -1,4 +1,4 @@
-package pl.actors
+package pl.actors.sending_remote_functions
 
 import akka.actor.{ActorSystem, Identify}
 import akka.util.Timeout
@@ -7,9 +7,10 @@ import com.typesafe.config.ConfigFactory
 import scala.concurrent.Await
 
 object AkkaRemoteConnector extends App {
-  import scala.concurrent.duration._
-  import scala.concurrent.ExecutionContext.Implicits.global
   import akka.pattern.ask
+
+  import scala.concurrent.ExecutionContext.Implicits.global
+  import scala.concurrent.duration._
 
   implicit val timeout: Timeout = 10 seconds
 
