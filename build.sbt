@@ -23,6 +23,7 @@ lazy val `scala-tests` = project.in(file("."))
 
 //addArtifact(artifact in(Compile, assembly), assembly)
 
+lazy val `akka-stream-playground` = project
 lazy val `akka-actors-playground` = project
 lazy val `http-clients` = project.dependsOn(`performance-test-kit`, `scala-async-http-client`)
 lazy val `akka-http-playground` = project
