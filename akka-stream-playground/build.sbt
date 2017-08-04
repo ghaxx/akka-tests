@@ -14,8 +14,12 @@ libraryDependencies ++= Seq(
 
   "org.apache.kafka" %% "kafka" % "0.11.0.0" exclude("org.slf4j", "slf4j-log4j12"),
   "org.apache.zookeeper" % "zookeeper" % "3.4.9" exclude("org.slf4j", "slf4j-log4j12"),
+  "org.apache.curator" % "curator-test" % "4.0.0",
+  "net.cakesolutions" %% "scala-kafka-client-testkit" % "0.11.0.0",
 
   "org.apache.activemq" % "activemq-all" % "5.15.0",
   "org.apache.activemq" % "activemq-pool" % "5.15.0"
 //  "org.apache.activemq" % "activemq-core" % "5.15.0"
 )
+
+resolvers += Resolver.bintrayRepo("cakesolutions", "maven")

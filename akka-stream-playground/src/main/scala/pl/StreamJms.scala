@@ -11,7 +11,7 @@ import org.apache.activemq.broker.BrokerService
 
 import scala.concurrent.Await
 
-object StreamFromJmsToKafka extends App {
+object StreamJms extends App {
   import scala.concurrent.duration._
 
   val broker = new BrokerService
