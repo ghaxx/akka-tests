@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[%d{HH:mm:ss.SSS}][%-5level][%logger{36}] %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="stash" class="net.logstash.logback.appender.LogstashSocketAppender">
+        <host>localhost</host>
+        <!--<port>514</port>-->
+        <port>5000</port>
+        <customFields>{"app":{"name":"logback-test","version":"1.0.0"}}</customFields>
+    </appender>
+
+    <logger name="akka" level="TRACE"/>
+    <logger name="pl" level="DEBUG"/>
+
+    <root level="WARN">
+        <appender-ref ref="STDOUT" />
+        <!--<appender-ref ref="stash" />-->
+    </root>
+</configuration>

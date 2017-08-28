@@ -26,11 +26,14 @@ object NumbersProcessor extends App {
   val producer = Producer.flow[String, String, ConsumerMessage.CommittableOffset](producerSettings)
 
   committableSource(consumerSettings, Subscriptions.topics("numbers"))
-    .map {
+    .mapAsync(1) {
       x =>
         val result = math.pow(x.record.value().toDouble, 2).toInt.toString
         logger.debug(s"Received message with offset: ${x.committableOffset} for ${x.record.value()}, sending $result")
-        ProducerMessage.Message(new ProducerRecord[String, String]("squares", result), x.committableOffset)
+        Future {
+          ProducerMessage.Message(new ProducerRecord[String, String]("squares", result), x.committableOffset)
+          throw new RuntimeException("Stop!")
+        }
     }
     .via(producer)
     .mapAsync(1)(_.message.passThrough.commitScaladsl())

@@ -16,19 +16,19 @@ object H2ServerApp extends App with LazyLogging {
   val tcpArgs = s"-tcp -tcpAllowOthers -tcpPort $port -baseDir $baseDir".split(" ")
 
 
-  while(true) {
+//  while(true) {
     println(System.currentTimeMillis() + " Starting " + ManagementFactory.getRuntimeMXBean().getName())
     try {
       val server = Server.createTcpServer(tcpArgs: _*).start()
-      (1 to 3) foreach { i =>
-        println(i)
-        Thread.sleep(1000)
-      }
-      println("Stopping")
-      server.stop()
-      Thread.sleep(100)
+//      (1 to 3) foreach { i =>
+//        println(i)
+//        Thread.sleep(1000)
+//      }
+//      println("Stopping")
+//      server.stop()
+//      Thread.sleep(100)
     } catch {
       case t: Throwable => println(t.getMessage)
     }
-  }
+//  }
 }

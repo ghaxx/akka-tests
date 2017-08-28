@@ -21,7 +21,7 @@ object DataAbuser extends App {
       while (true) {
         try {
 //          Await.result(db.run(ProjectTableQuery ++= Project.gen(100)), 5 seconds)
-          feeder.feedSlickAndBindLater(10, 2)
+          feeder.feedSlickAndBindLater(2, 2)
 //          println(s"$i inserted")
         } catch {
           case t: Throwable => println(t.getMessage)

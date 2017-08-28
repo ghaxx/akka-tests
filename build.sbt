@@ -28,6 +28,7 @@ lazy val `akka-actors-playground` = project
 lazy val `http-clients` = project.dependsOn(`performance-test-kit`, `scala-async-http-client`)
 lazy val `akka-http-playground` = project
 lazy val `static-resources-server` = project
+lazy val `logstash-playground` = project
 lazy val `spray-playground` = project
 lazy val `cache-tests` = project.dependsOn(`performance-test-kit`)
 lazy val `performance-test-kit` = project
@@ -38,7 +39,7 @@ lazy val `spray-client` = project
 
 libraryDependencies in ThisBuild ++= Seq(
   "org.scalatest" %% "scalatest" % "3.0.0" % "test",
-  "ch.qos.logback" % "logback-classic" % "1.1.8",
+  "ch.qos.logback" % "logback-classic" % "1.2.3",
   "com.typesafe.scala-logging" %% "scala-logging" % "3.5.0",
   "org.json4s" %% "json4s-native" % "3.5.0"
 )
