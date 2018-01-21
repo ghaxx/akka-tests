@@ -1,4 +1,4 @@
-package pl.kafka_tests
+package pl.tracing.kafka_tests
 
 import akka.stream.{Attributes, Inlet, SinkShape}
 import akka.stream.stage.{GraphStage, GraphStageLogic, InHandler}

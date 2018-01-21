@@ -1,4 +1,4 @@
-package pl.kafka_tests
+package pl.tracing.kafka_tests
 
 import java.util.{Collections, Properties}
 

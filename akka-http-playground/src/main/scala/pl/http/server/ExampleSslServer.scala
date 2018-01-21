@@ -35,7 +35,7 @@ object ExampleSslServer extends App with LazyLogging {
 
   val port = Try(args(1).toInt).getOrElse(8080)
 
-  private def requestDuration = 2000
+  private def requestDuration = 200
 
   val dataStreaming = new DataStreaming
 
@@ -52,11 +52,12 @@ object ExampleSslServer extends App with LazyLogging {
       } ~ dataStreaming.route
     }
 
-  val password: Array[Char] = "asdf!@#$".toCharArray // do not store passwords in code, read them from somewhere safe!
+  val password: Array[Char] = "qwe123".toCharArray // do not store passwords in code, read them from somewhere safe!
 
   val ks: KeyStore = KeyStore.getInstance("JKS")
 //  val keystore: InputStream = getClass.getClassLoader.getResourceAsStream("gbl03817.keystore")
-  val keystore: InputStream = new FileInputStream("C:\\sandbox\\dev\\scala-tests\\akka-http-playground\\src\\main\\resources\\gbl03817.keystore")
+//  val keystore: InputStream = new FileInputStream("C:\\Users\\Kuba\\Development\\scala-experiments\\scala-tests\\akka-http-playground\\src\\main\\resources\\keystore-local.domain.jks")
+  val keystore: InputStream = new FileInputStream("C:\\Users\\Kuba\\Development\\scala-experiments\\scala-tests\\akka-http-playground\\src\\main\\resources\\keystore-local.domain.jks")
 
   require(keystore != null, "Keystore required!")
   ks.load(keystore, password)
@@ -92,8 +93,8 @@ object ExampleSslServer extends App with LazyLogging {
     clientAuth = Some(TLSClientAuth.want)
   )
 
-  Http().setDefaultServerHttpContext(https)
-  val bindingFuture = Http().bindAndHandle(route, Try(args(0)).getOrElse("localhost"), port)
+//  Http().setDefaultServerHttpContext(https)
+  val bindingFuture = Http().bindAndHandle(route, Try(args(0)).getOrElse("localhost"), port, https)
 
   logger.info(s"Server online at $port")
   logger.info("Press RETURN to stop")

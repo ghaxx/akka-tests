@@ -1,19 +1,15 @@
-package pl
+package pl.tracing
 
 import akka.NotUsed
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
-import akka.stream.alpakka.jms.{JmsSinkSettings, JmsSourceSettings}
 import akka.stream.alpakka.jms.scaladsl.{JmsSink, JmsSource}
+import akka.stream.alpakka.jms.{JmsSinkSettings, JmsSourceSettings}
 import akka.stream.scaladsl.{Sink, Source}
-import org.apache.activemq.{ActiveMQConnection, ActiveMQConnectionFactory}
 import org.apache.activemq.broker.BrokerService
-
-import scala.concurrent.Await
+import org.apache.activemq.{ActiveMQConnection, ActiveMQConnectionFactory}
 
 object StreamFromJmsToKafka extends App {
-  import concurrent.ExecutionContext.Implicits.global
-  import scala.concurrent.duration._
 
   val broker = new BrokerService
 broker.setPersistent(false)
@@ -58,8 +54,6 @@ Thread.sleep(15000)
       Thread.sleep(100)
   }
 
-  import org.apache.activemq.advisory.DestinationSource
-  import org.apache.activemq.command.ActiveMQQueue
   import javax.jms.JMSException
 
   val ds = connection.asInstanceOf[ActiveMQConnection].getDestinationSource

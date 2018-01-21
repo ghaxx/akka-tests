@@ -1,15 +1,4 @@
-package pl
-
-import akka.NotUsed
-import akka.actor.ActorSystem
-import akka.stream.ActorMaterializer
-import akka.stream.alpakka.jms.scaladsl.{JmsSink, JmsSource}
-import akka.stream.alpakka.jms.{JmsSinkSettings, JmsSourceSettings}
-import akka.stream.scaladsl.{Sink, Source}
-import org.apache.activemq.ActiveMQConnectionFactory
-import org.apache.activemq.broker.BrokerService
-
-import scala.concurrent.Await
+package pl.tracing
 
 object StreamJms extends App {
   import scala.concurrent.duration._

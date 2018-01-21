@@ -1,4 +1,4 @@
-package pl.kafka_tests
+package pl.tracing.kafka_tests
 
 import akka.actor.ActorSystem
 import akka.kafka.{ConsumerMessage, ConsumerSettings, ProducerMessage, ProducerSettings, Subscriptions}
@@ -9,7 +9,7 @@ import akka.stream.scaladsl.Sink
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.apache.kafka.common.serialization.{StringDeserializer, StringSerializer}
 import org.slf4j.LoggerFactory
-import pl.kafka_tests.NumbersProcessor.getClass
+import pl.tracing.kafka_tests.NumbersProcessor.getClass
 
 object SquaresConsumer extends App {
 

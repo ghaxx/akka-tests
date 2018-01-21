@@ -1,7 +1,7 @@
 name := "Akka Stream Playground"
 version := "1.0"
 
-val akkaVersion = "2.4.19"
+val akkaVersion = "2.5.6"
 
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-actor" % akkaVersion,

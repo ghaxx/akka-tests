@@ -1,4 +1,4 @@
-package pl
+package pl.tracing
 
 import kafka.server.{KafkaConfig, KafkaServerStartable}
 import org.apache.curator.test.TestingServer

@@ -1,12 +1,14 @@
 name := "akka-http-playground"
 version := "1.0"
 
-val akkaStreamsVersion = "2.4.16"
+val akkaVersion = "2.5.6"
 val scalazVersion = "7.2.8"
 
 libraryDependencies ++= Seq(
-  "com.typesafe.akka" %% "akka-http" % "10.0.5",
+  "com.typesafe.akka" %% "akka-http" % "10.0.10",
+  "com.typesafe.akka" %% "akka-cluster" % akkaVersion,
   "com.typesafe.akka" %% "akka-http-spray-json" % "10.0.5",
+  "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
   "org.scalaz" %% "scalaz-core" % scalazVersion,
   "org.scalatest" %% "scalatest" % "3.0.0" % "test",
   "ch.qos.logback" % "logback-classic" % "1.1.8",

@@ -8,12 +8,12 @@ lazy val `scala-tests` = project.in(file("."))
   .settings(
     name := "Scala Tests",
     version := "1.0"
-//    assemblyShadeRules in assembly := Seq(
-//      ShadeRule.zap("ch.**", "scala.**", "com.**").inAll,
-//      ShadeRule.rename("org.json4s.**" -> "rm.org.json4s.@1").inAll,
-//      ShadeRule.keep("**").inProject,
-//      ShadeRule.keep("pl.**", "rm.**", "org.json4s.**").inAll
-//    )
+    //    assemblyShadeRules in assembly := Seq(
+    //      ShadeRule.zap("ch.**", "scala.**", "com.**").inAll,
+    //      ShadeRule.rename("org.json4s.**" -> "rm.org.json4s.@1").inAll,
+    //      ShadeRule.keep("**").inProject,
+    //      ShadeRule.keep("pl.**", "rm.**", "org.json4s.**").inAll
+    //    )
   )
 
 //artifact in(Compile, assembly) := {
@@ -26,7 +26,7 @@ lazy val `scala-tests` = project.in(file("."))
 lazy val `akka-stream-playground` = project
 lazy val `akka-actors-playground` = project
 lazy val `http-clients` = project.dependsOn(`performance-test-kit`, `scala-async-http-client`)
-lazy val `akka-http-playground` = project
+lazy val `akka-http-playground` = project.dependsOn(`scala-async-http-client`)
 lazy val `static-resources-server` = project
 lazy val `logstash-playground` = project
 lazy val `spray-playground` = project
@@ -44,3 +44,10 @@ libraryDependencies in ThisBuild ++= Seq(
   "org.json4s" %% "json4s-native" % "3.5.0"
 )
 
+scalacOptions in ThisBuild ++= Seq(
+  "-feature",
+  "-language:implicitConversions",
+  "-language:higherKinds",
+  "-language:existentials",
+  "-language:postfixOps"
+)
