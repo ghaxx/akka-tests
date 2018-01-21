@@ -4,30 +4,36 @@ import java.time.{ZoneOffset, ZonedDateTime}
 
 private case class MessageTracingData private (
   correlationId: CorrelationId,
-  trace: List[MessageId],
+  messageId: MessageId,
+  previousMessageId: Option[MessageId],
+  generation: Int,
+  creationTime: ZonedDateTime,
   description: String,
-  creationDate: ZonedDateTime,
   source: Service,
   target: Service
 )
 
 private object MessageTracingData {
   def createNew(description:String, source: Service, target: Service) =
-    new MessageTracingData(
+    MessageTracingData(
       CorrelationId.createNew,
-      List(MessageId.createNew),
-      description,
+      MessageId.createNew,
+      None,
+      0,
       ZonedDateTime.now(ZoneOffset.UTC),
+      description,
       source,
       target
     )
 
   def createFollowUp(tracingData: MessageTracingData, description: String, source: Service, target: Service) =
-    new MessageTracingData(
+    MessageTracingData(
       tracingData.correlationId,
-      tracingData.trace :: MessageId.createNew,
-      description,
+      MessageId.createNew,
+      Some(tracingData.messageId),
+      tracingData.generation + 1,
       ZonedDateTime.now(ZoneOffset.UTC),
+      description,
       source,
       target
     )
