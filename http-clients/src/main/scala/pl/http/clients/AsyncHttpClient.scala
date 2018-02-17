@@ -8,6 +8,7 @@ import scala.concurrent.{Await, ExecutionContext, Future, Promise}
 import scala.util.Try
 import scalaz.Scalaz._
 import org.asynchttpclient._
+import pl.http.client.Request
 
 object AsyncHttpClient extends App with ClientTestScenario {
 
@@ -28,10 +29,10 @@ object AsyncHttpClient extends App with ClientTestScenario {
   val asyncHttpClient = new DefaultAsyncHttpClient(cf)
   //  val asyncHttpClient = new DefaultAsyncHttpClient()
 
-  val get1 = asyncHttpClient.prepareGet("http://localhost:8080/count")
+  val get1 = Request.Get("http://localhost:8080/count")
 
   val name = "async"
-  def makeRequest: Future[String] = get1.asyncExecuteAsString()
+  def makeRequest: Future[String] = asyncHttpClient.asyncExecuteAsString(get1)
 
   runTest()
   asyncHttpClient.close()
