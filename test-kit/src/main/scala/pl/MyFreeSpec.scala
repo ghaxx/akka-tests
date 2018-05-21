@@ -1,7 +1,7 @@
 package pl
 
 import org.scalatest.concurrent.{Eventually, ScalaFutures}
-import org.scalatest.{FreeSpecLike, FunSuite, Inside, Matchers}
+import org.scalatest.{FreeSpecLike, Inside, Matchers}
 
 trait MyFreeSpec
   extends FreeSpecLike

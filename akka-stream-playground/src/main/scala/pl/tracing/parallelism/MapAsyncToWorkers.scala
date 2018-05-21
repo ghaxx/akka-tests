@@ -1,4 +1,4 @@
-package pl.streams.partitioned
+package pl.tracing.parallelism
 
 import akka.stream.ActorAttributes.SupervisionStrategy
 import akka.stream._

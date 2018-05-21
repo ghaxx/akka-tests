@@ -1,7 +1,7 @@
 package pl.tracing.messaging
 
 
-case class Message private(
+case class Message (
   command: Command,
   passthrough: Option[State],
   tracingData: MessageTracingData

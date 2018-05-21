@@ -1,17 +1,17 @@
-package pl.streams.partitioned
+package pl.partitioned
 
 import akka.actor.ActorSystem
 import akka.stream.{ActorAttributes, ActorMaterializer, Supervision}
 import akka.stream.scaladsl._
-import akka.stream.testkit.scaladsl.TestSink
-import akka.testkit.TestProbe
 import pl.MyLittleHelper.Timer
 import pl.MySpec
 
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
-
 import Global._
+import akka.stream.testkit.scaladsl.TestSink
+import akka.testkit.TestProbe
+import pl.tracing.parallelism.MapAsyncToWorkers
 
 class GroupByTest extends MySpec with ParallelBehavior {
 

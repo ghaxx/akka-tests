@@ -1,4 +1,4 @@
-package pl.streams.partitioned
+package pl.partitioned
 
 import com.typesafe.scalalogging.LazyLogging
 

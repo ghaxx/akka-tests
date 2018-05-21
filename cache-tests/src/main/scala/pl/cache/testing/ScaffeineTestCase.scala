@@ -26,7 +26,7 @@ class ScaffeineTestCase extends TestCase {
       cache.put(i, "terefere" + i)
       i += 1
     }
-    cache.getIfPresent()
+    cache.getIfPresent(1L)
     t.elapsed
   }
 }

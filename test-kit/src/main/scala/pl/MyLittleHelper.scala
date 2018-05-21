@@ -1,8 +1,15 @@
 package pl
 
+import org.slf4j.LoggerFactory
+
 trait MyLittleHelper {
 
   import MyLittleHelper._
+
+  private val logger = LoggerFactory.getLogger("println")
+
+  def log(s: String) = logger.info(s)
+  def log(s: String, t: Throwable) = logger.info(s, t)
 
   def logTime[T](description: String, printer: Any ⇒ Unit = println)(testedCode: ⇒ T): T = {
     val timer = Timer(description)

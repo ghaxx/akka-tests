@@ -1,7 +1,7 @@
 name := "Misc"
 version := "1.0"
 
-val akkaStreamsVersion = "2.4.16"
+val akkaStreamsVersion = "2.5.11"
 val scalazVersion = "7.2.8"
 
 libraryDependencies ++= Seq(
@@ -17,5 +17,6 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-stream-testkit" % akkaStreamsVersion,
   "com.chuusai" %% "shapeless" % "2.3.2",
   "org.scalaj" %% "scalaj-http" % "2.3.0",
-  "joda-time" % "joda-time" % "2.9.9"
+  "joda-time" % "joda-time" % "2.9.9",
+  "org.xmlunit" % "xmlunit-core" % "2.5.1"
 )

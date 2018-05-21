@@ -1,5 +1,13 @@
 package pl.tracing
 
+import akka.Done
+import akka.actor.ActorSystem
+import akka.stream.scaladsl.{MergeHub, Sink, Source}
+import akka.stream.{ActorMaterializer, ActorMaterializerSettings, KillSwitches}
+import akka.util.Timeout
+
+import scala.concurrent.{Await, Promise}
+
 object SourcingMergeHub extends App {
 
   import scala.concurrent.duration._

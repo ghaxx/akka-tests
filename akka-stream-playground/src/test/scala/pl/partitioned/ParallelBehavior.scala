@@ -1,4 +1,4 @@
-package pl.streams.partitioned
+package pl.partitioned
 
 import akka.NotUsed
 import akka.actor.ActorSystem

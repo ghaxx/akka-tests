@@ -1,9 +1,10 @@
-package pl.streams.partitioned
+package pl.partitioned
 
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
 import akka.stream.scaladsl._
 import pl.MySpec
+import pl.tracing.parallelism.MapAsyncToWorkers
 
 import scala.concurrent.Future
 

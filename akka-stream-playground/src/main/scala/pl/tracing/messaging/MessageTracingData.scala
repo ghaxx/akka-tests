@@ -2,7 +2,7 @@ package pl.tracing.messaging
 
 import java.time.{ZoneOffset, ZonedDateTime}
 
-private case class MessageTracingData private (
+case class MessageTracingData (
   correlationId: CorrelationId,
   messageId: MessageId,
   previousMessageId: Option[MessageId],

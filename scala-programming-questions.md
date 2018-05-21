@@ -13,17 +13,21 @@
 #### Language Questions:
 
 * What is the difference between a `var`, a `val` and `def`? 
-* How many argument can a function, constructor have?
+    * How `lazy val` works? How does it behave when overriding?
+* How many argument can a function, constructor have? (should be unlimited now)
 * What is the difference between a `trait` and an `abstract class`? 
 * What is the difference between an `object` and a `class`?
 * What is a `case class`? 
     * What is trait `Product`? 
     * What are methods `productPrefix` and `productIterator`?
+    * Does creating identical case classes impact memory? (Are they internalized like strings?)
 * What is the difference between a Java future and a Scala future?
 * What is the difference between `unapply` and `apply`, when would you use them?
     * Regexp?
-* What are *value classes*? 
+* What are *value classes*? (extends `AnyVal`)
+    * What are limitations of those objects? 
 * What is a companion object?
+* What is the difference between `sealed` and `final`? Can those be combined?
 * What is the difference between the following terms and types in Scala: `Nil`, `Null`, `None`, `Nothing`?
 * What is `Unit`?
     * Is there any danger related to using `Future[Unit]`?
@@ -71,7 +75,9 @@
           def f[AA >: A, BB <: B](a: AA): BB
         }
         ```
-    
+* What are implicit parameters?
+* What are implicit functions?
+* What are implicit classes?
 
 
 #### Functional Programming Questions:
@@ -90,7 +96,7 @@
 * What is gained from using immutable objects?
 * What is tail recursion? 
   * How does it differentiate from common recursion?
-  * What issues are there with tail recursive functions in the JVM?
+  * What issues are there with tail recursive functions in the JVM? (there's none in JVM)
   * How does the Scala compiler optimize a tail recursive function?
   * How do you ensure that the compiler optimizes the tail recursive function?
   * Can you tell what will be the result? 
@@ -115,7 +121,8 @@
   sum(100000)
   ```
 * What is function currying?
-* What are implicit parameters?
+    * Mention implicit value classes.
+* What is the difference between implicit functions and implicit classes? 
 * What are typeclasses? 
 * What are lenses?
 * What is and which are the uses of: Enumerators, Enumeratees and Iteratee
@@ -239,7 +246,9 @@ for {
 * Where is offset stored? 
 * Can you read from custom offset? 
 * What is partitioning? 
-    * What could be a use case for partitions? 
+    * What could be a use case for partitions?
+* What is Kafka cluster? 
+* What is zookeeper used for?
 
 ##### JVM:
 
@@ -249,6 +258,7 @@ for {
 ##### SQL:
 
 * What's the difference between `where` and `having`?
+* Why use indexes?
 
 ##### REST:
 
@@ -259,12 +269,20 @@ for {
     * What's JSON Merge Patch? (https://tools.ietf.org/html/rfc6902#appendix-A.1, https://tools.ietf.org/html/rfc7396)
     * What's JSON Patch document? 
 
+##### ScalaZ:
+
+* What is `Either`/`Disjunction`? (right biased either, deprecated in 2.12)
+    * What is `EitherT`? (e.g. transforms Future\[A\\/B\] to B in for-comprehension)
+* What is `Validation`?
+* What is `.traverse`/`.traverseU`?
+* Do you like ‘scalaz‘? 
+
 ##### Shapeless:
 
 * What is `HList`? 
 * What is `KList`? 
 * What is `Coproduct`? 
-* What would be a valid use case for shapeless? 
+* What would be a valid use case for shapeless? (abstraction over arity: urls in akka-http, lambdas with arbitrary number of arguments)
 
 ##### Other:
 
@@ -286,6 +304,7 @@ else
 ```
 * What's a cool project that you've recently worked on?
 * What testing framework for Scala do you use?
+    * Are you familiar with table/property based tests? What's the difference?
+    * What is TDD, ATDD (acceptance)?
 * What do you know about property based testing frameworks, such as Scalacheck? 
-* Do you like ‘scalaz‘? 
 * Do you like ‘scala.js‘? 
