@@ -8,7 +8,7 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.marshalling.ToResponseMarshaller
 import akka.http.scaladsl.server.Directives.{complete, logRequestResult, path}
 import akka.stream.{ActorMaterializer, OverflowStrategy}
-import akka.stream.scaladsl.{MergeHub, Sink, Source}
+import akka.stream.scaladsl.{Flow, MergeHub, Sink, Source}
 import akka.util.Timeout
 import com.typesafe.config.ConfigFactory
 import com.typesafe.scalalogging.LazyLogging
@@ -44,7 +44,7 @@ var c = 0
     t
   }
   val m = MergeHub.source[Int].to(waiter).run()
-  val n = akka.stream.impl.fusing.Map[Int, String]({t: Int =>
+  val n = Flow[Int].map({t: Int =>
     Thread.sleep(t)
     println(s"$t")
     "" + t

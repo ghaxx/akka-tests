@@ -3,6 +3,7 @@ package pl.http.server.streaming_tests
 import java.util.concurrent.Executors
 
 import org.asynchttpclient._
+import pl.http.client.Request
 
 import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.util.Random
@@ -26,7 +27,7 @@ object AsyncHttpClient extends App {
 
 
   val name = "async"
-  def makeRequest(text: String): Future[String] = asyncHttpClient.prepareGet(s"http://localhost:8080/single/wait/$text").asyncExecuteAsString()
+  def makeRequest(text: String): Future[String] = asyncHttpClient.asyncExecuteAsString(Request.Get("http://localhost:8080/single/wait/$text"))
 
   val responses = (1000 to 100 by -100) map { i =>
       if (i % 1000 == 0) println(s"Made $i requests")
