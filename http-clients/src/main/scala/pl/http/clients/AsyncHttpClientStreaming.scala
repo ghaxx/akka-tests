@@ -70,3 +70,30 @@ object AsyncHttpClientStreaming extends App {
 
 
 }
+
+def asyncExecuteAsByteStream(request: ARequest, q:  SourceQueueWithComplete[Array[Byte]])(implicit system: ActorSystem, materializer: ActorMaterializer): Source[Array[Byte], NotUsed] = {
+  val s2 = new S
+  val s = Source.fromGraph(s2)
+  client.executeRequest(request, new AsyncCompletionHandler[Unit] {
+
+  override def onBodyPartReceived(content: HttpResponseBodyPart): AsyncHandler.State = {
+  //          println(new String(content.getBodyPartBytes))
+  //          q.synchronized{
+  val x= content.getBodyPartBytes
+  //          println(x.length)
+  q.offer(x)
+  //          }
+  AsyncHandler.State.CONTINUE
+}
+
+  def onCompleted(response: AResponse): Unit = {
+  //          s2.complete()
+  //          q.synchronized {
+  println("Done")
+  q.complete()
+  //          }
+}
+
+})
+  s
+}
