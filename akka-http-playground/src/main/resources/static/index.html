@@ -1,0 +1,27 @@
+<html>
+<head>
+    <script src="jq.js"></script>
+</head>
+<body>
+T: <div id="t"></div>
+R: <div id="r"></div>
+<script>
+    $.ajax({
+        url: "https://a.localhost.local:8080/count",
+        xhrFields: {
+            withCredentials: true
+        }
+    }).done(function (data) {
+        $('#t').text(data)
+    });
+    $.ajax({
+        url: "https://b.localhost.local:8081/count",
+        // xhrFields: {
+        //     withCredentials: true
+        // }
+    }).done(function (data) {
+        $('#r').text(data)
+    });
+</script>
+</body>
+</html>

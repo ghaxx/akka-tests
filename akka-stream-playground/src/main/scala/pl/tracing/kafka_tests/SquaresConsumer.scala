@@ -14,7 +14,7 @@ import pl.tracing.kafka_tests.NumbersProcessor.getClass
 object SquaresConsumer extends App {
 
 
-  val logger = LoggerFactory.getLogger(getClass)
+  val logger = LoggerFactory.getLogger("println")
 
   implicit val system = ActorSystem("SquaresConsumer")
   implicit val materializer = ActorMaterializer()

@@ -4,17 +4,22 @@ import java.io.{FileInputStream, InputStream}
 import java.security.cert.X509Certificate
 import java.security.{KeyStore, SecureRandom}
 import java.util.concurrent.atomic.AtomicLong
-import javax.net.ssl.{KeyManagerFactory, SSLContext, TrustManagerFactory, X509TrustManager}
 
+import javax.net.ssl.{KeyManagerFactory, SSLContext, TrustManagerFactory, X509TrustManager}
 import akka.actor.ActorSystem
 import akka.event.Logging
+import akka.http.impl.util.JavaAccessors
 import akka.http.scaladsl.{ConnectionContext, Http, HttpsConnectionContext}
 import akka.http.scaladsl.marshalling.ToResponseMarshaller
+import akka.http.scaladsl.model.{DateTime, HttpResponse}
+import akka.http.scaladsl.model.headers._
 import akka.http.scaladsl.server.Directives._
 import akka.stream.{ActorMaterializer, TLSClientAuth}
 import akka.util.Timeout
 import com.typesafe.config.ConfigFactory
 import com.typesafe.scalalogging.LazyLogging
+import pl.http.server.ResourcesSslServer.args
+import pl.http.server.ssl.ContextFactory
 
 import scala.concurrent.duration._
 import scala.io.StdIn
@@ -27,76 +32,57 @@ object ExampleSslServer extends App with LazyLogging {
   implicit val executionContext = system.dispatcher
   val counter = new AtomicLong()
 
+  val port = Try(args(1).toInt).getOrElse(8080)
+  val host = Try(args(0)).getOrElse("a.localhost.local")
+
+  def h = List(
+    HttpCookie("data1", "values" + counter.get(), expires = Some(DateTime.now.plus(500000)), secure = true, domain = Some("localhost.local"), httpOnly = true),
+    HttpCookie("data", "values" + counter.get(), expires = Some(DateTime.now.plus(500000)), secure = true, domain = Some("localhost.local")),
+    HttpCookie("insecure", "values" + counter.get(), expires = Some(DateTime.now.plus(500000)), domain = Some("localhost.local"))
+  )
+
   private def delayedComplete[T](duration: Int)(x: => T)(implicit marshaller: ToResponseMarshaller[T]) =
     complete {
       Thread.sleep(duration)
+      HttpResponse(headers = h.map(`Set-Cookie`(_)))
       x
     }
 
-  val port = Try(args(1).toInt).getOrElse(8080)
-
   private def requestDuration = 200
 
-  val dataStreaming = new DataStreaming
-
   val route =
-    logRequestResult("Requests", Logging.InfoLevel) {
-      path("random") {
-        delayedComplete(requestDuration) {
-          "" + Random.nextInt(100)
+    respondWithHeaders(
+      `Access-Control-Allow-Origin`(HttpOriginRange("https://b.localhost.local:8081")),
+//      `Access-Control-Allow-Origin`.*,
+      `Access-Control-Allow-Credentials`(true),
+      `Access-Control-Allow-Headers`("Authorization", "Content-Type", "X-Requested-With")
+    ) {
+      setCookie(
+        h.head, h.tail: _*
+      ) {
+        logRequestResult("Requests", Logging.InfoLevel) {
+          path("random") {
+            delayedComplete(requestDuration) {
+              "" + Random.nextInt(100)
+            }
+          } ~ path("count") {
+            delayedComplete(requestDuration) {
+              "" + counter.getAndIncrement()
+            }
+          }
         }
-      } ~ path("count") {
-        delayedComplete(requestDuration) {
-          "" + counter.getAndIncrement()
-        }
-      } ~ dataStreaming.route
+      }
     }
 
-  val password: Array[Char] = "qwe123".toCharArray // do not store passwords in code, read them from somewhere safe!
-
-  val ks: KeyStore = KeyStore.getInstance("JKS")
-//  val keystore: InputStream = getClass.getClassLoader.getResourceAsStream("gbl03817.keystore")
-//  val keystore: InputStream = new FileInputStream("C:\\Users\\Kuba\\Development\\scala-experiments\\scala-tests\\akka-http-playground\\src\\main\\resources\\keystore-local.domain.jks")
-  val keystore: InputStream = new FileInputStream("C:\\Users\\Kuba\\Development\\scala-experiments\\scala-tests\\akka-http-playground\\src\\main\\resources\\keystore-local.domain.jks")
-
-  require(keystore != null, "Keystore required!")
-  ks.load(keystore, password)
-
-  val keyManagerFactory: KeyManagerFactory = KeyManagerFactory.getInstance("SunX509")
-  keyManagerFactory.init(ks, password)
-
-  val tmf: TrustManagerFactory = TrustManagerFactory.getInstance("SunX509")
-  tmf.init(ks)
-  val tm = new X509TrustManager {
-    val i = tmf.getTrustManagers.apply(0).asInstanceOf[X509TrustManager]
-    override def checkServerTrusted(x509Certificates: Array[X509Certificate], s: String) = {
-      println("checkServerTrusted")
-      println(s"""x509Certificates = ${x509Certificates}""")
-      println(s"""s = ${s}""")
-      i.checkServerTrusted(x509Certificates, s)
-    }
-    override def checkClientTrusted(x509Certificates: Array[X509Certificate], s: String) = {
-      println("checkServerTrusted")
-      println(s"""x509Certificates = ${x509Certificates}""")
-      println(s"""s = ${s}""")
-      i.checkClientTrusted(x509Certificates, s)
-    }
-    override def getAcceptedIssuers = {
-      i.getAcceptedIssuers
-    }
-  }
-
-  val sslContext: SSLContext = SSLContext.getInstance("TLS")
-  sslContext.init(keyManagerFactory.getKeyManagers, Array(tm), new SecureRandom)
   val https: HttpsConnectionContext = ConnectionContext.https(
-    sslContext = sslContext,
+    sslContext = ContextFactory.createSslCtx,
     clientAuth = Some(TLSClientAuth.want)
   )
 
 //  Http().setDefaultServerHttpContext(https)
-  val bindingFuture = Http().bindAndHandle(route, Try(args(0)).getOrElse("localhost"), port, https)
+  val bindingFuture = Http().bindAndHandle(route, host, port, https)
 
-  logger.info(s"Server online at $port")
+  logger.info(s"Server online at https://$host:$port")
   logger.info("Press RETURN to stop")
   StdIn.readLine()
   bindingFuture

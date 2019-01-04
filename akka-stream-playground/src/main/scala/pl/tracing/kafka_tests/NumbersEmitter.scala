@@ -18,10 +18,10 @@ import scala.concurrent.Future
 
 object NumbersEmitter extends App {
 
-  val logger = LoggerFactory.getLogger(getClass)
+  val logger = LoggerFactory.getLogger("println")
 
   implicit val system = ActorSystem("Producer")
-  implicit val materializer = ActorMaterializer(ActorMaterializerSettings(system).withInputBuffer(initialSize = 1, maxSize = 1))
+  implicit val materializer = ActorMaterializer(ActorMaterializerSettings(system))//.withInputBuffer(initialSize = 1, maxSize = 1))
 
   val config = system.settings.config.getConfig("kafka.producer")
 
@@ -48,7 +48,7 @@ object NumbersEmitter extends App {
   private val flow = Producer.flow[String, String, NotUsed](producerSettings, producer)
   private val iterable: immutable.Iterable[ProducerRecord[String, String]] =
     Stream.from(0).map { x =>
-      Thread.sleep(1000)
+      Thread.sleep(5000)
       logger.debug(s"Sending $x")
       new ProducerRecord[String, String]("numbers", x.toString)
     }

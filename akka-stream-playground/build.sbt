@@ -8,13 +8,14 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-remote" % akkaVersion,
   "com.typesafe.akka" %% "akka-stream" % akkaVersion,
   "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion,
-  "com.typesafe.akka" %% "akka-stream-kafka" % "0.16",
+  "com.typesafe.akka" %% "akka-stream-kafka" % "0.20",
   "com.lightbend.akka" %% "akka-stream-alpakka-jms" % "0.11",
   "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
   "javax.jms" % "jms" % "1.1",
 
-  "org.apache.kafka" %% "kafka" % "0.11.0.0" exclude("org.slf4j", "slf4j-log4j12"),
-  "org.apache.zookeeper" % "zookeeper" % "3.4.9" exclude("org.slf4j", "slf4j-log4j12"),
+  "ch.qos.logback" % "logback-classic" % "1.2.3",
+  "com.typesafe.scala-logging" %% "scala-logging" % "3.5.0",
+
   "org.apache.curator" % "curator-test" % "4.0.0",
 //  "net.cakesolutions" %% "scala-kafka-client-testkit" % "0.11.0.0",
 

@@ -36,13 +36,14 @@ lazy val misc = project.dependsOn(`test-kit`)
 lazy val `slick-playground` = project.dependsOn(`test-kit`)
 lazy val `scala-async-http-client` = RootProject(uri("https://github.com/ghaxx/scala-async-http-client.git"))
 lazy val `spray-client` = project
+lazy val `local-kafka` = project
 
-libraryDependencies in ThisBuild ++= Seq(
-  "org.scalatest" %% "scalatest" % "3.0.0" % "test",
-  "ch.qos.logback" % "logback-classic" % "1.2.3",
-  "com.typesafe.scala-logging" %% "scala-logging" % "3.5.0",
-  "org.json4s" %% "json4s-native" % "3.5.0"
-)
+//libraryDependencies in ThisBuild ++= Seq(
+//  "org.scalatest" %% "scalatest" % "3.0.0" % "test",
+//  "ch.qos.logback" % "logback-classic" % "1.2.3",
+//  "com.typesafe.scala-logging" %% "scala-logging" % "3.5.0",
+//  "org.json4s" %% "json4s-native" % "3.5.0"
+//)
 
 scalacOptions in ThisBuild ++= Seq(
   "-feature",

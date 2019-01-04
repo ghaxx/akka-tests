@@ -26,8 +26,8 @@ object ResourcesServer extends App with CorsSupport with LazyLogging {
   implicit val materializer = ActorMaterializer()
   implicit val executionContext = system.dispatcher
 
-  val port = Try(args(1).toInt).getOrElse(8080)
-  val host = Try(args(0)).getOrElse("localhost")
+  val port = Try(args(1).toInt).getOrElse(8081)
+  val host = Try(args(0)).getOrElse("localhost1")
 
   private def getDefaultPage = {
     "/index.html"

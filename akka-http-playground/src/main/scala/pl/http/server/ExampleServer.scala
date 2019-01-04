@@ -2,22 +2,15 @@ package pl.http.server
 
 import java.util.concurrent.atomic.AtomicLong
 
-import akka.NotUsed
 import akka.actor.ActorSystem
 import akka.event.Logging
-import akka.event.Logging.LogLevel
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.common.{EntityStreamingSupport, JsonEntityStreamingSupport}
-import akka.http.scaladsl.marshalling.{ToResponseMarshallable, ToResponseMarshaller}
-import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
+import akka.http.scaladsl.marshalling.ToResponseMarshaller
 import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
-import akka.stream.scaladsl.{Flow, Source}
-import akka.util.{ByteString, Timeout}
+import akka.util.Timeout
 import com.typesafe.config.ConfigFactory
 import com.typesafe.scalalogging.LazyLogging
-import pl.http.server.data.ANumber
-import spray.json.DefaultJsonProtocol
 
 import scala.concurrent.duration._
 import scala.io.StdIn
@@ -50,6 +43,8 @@ object ExampleServer extends App with CorsSupport with LazyLogging {
         delayedComplete(requestDuration) {
           "" + counter.getAndIncrement()
         }
+      } ~ path("big") {
+        complete((1 to (1024*1024*1024)).map(x => x + " ").mkString + "!!!")
       } ~ dataStreaming.route
     }
 

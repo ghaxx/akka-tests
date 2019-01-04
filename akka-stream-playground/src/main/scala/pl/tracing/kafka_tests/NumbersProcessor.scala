@@ -15,7 +15,7 @@ import scala.concurrent.Future
 
 object NumbersProcessor extends App {
 
-  val logger = LoggerFactory.getLogger(getClass)
+  val logger = LoggerFactory.getLogger("println")
 
   implicit val system = ActorSystem("Processor")
   implicit val materializer = ActorMaterializer()
@@ -35,7 +35,7 @@ object NumbersProcessor extends App {
         logger.debug(s"Received message with offset: ${x.committableOffset} for ${x.record.value()}, sending $result")
         Future {
           ProducerMessage.Message(new ProducerRecord[String, String]("squares", result), x.committableOffset)
-          throw new RuntimeException("Stop!")
+//          throw new RuntimeException("Stop!")
         }
     }
     .via(producer)
