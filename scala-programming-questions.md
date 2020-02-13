@@ -23,6 +23,7 @@
     * Does creating identical case classes impact memory? (Are they internalized like strings?)
 * What is the difference between a Java future and a Scala future?
 * What is the difference between `unapply` and `apply`, when would you use them?
+    * unapplySeq - f(): Option[Seq[T]]
     * Regexp?
 * What are *value classes*? (extends `AnyVal`)
     * What are limitations of those objects? 
