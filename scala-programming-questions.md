@@ -129,7 +129,11 @@
 
 #### Scala Programming Questions:
 
-* How can you make a `List[String]` from a `List[List[String]]`?
+* How can you make a `List[T]` from a `List[List[T]]`? 
+    * flatten
+    * flatMap
+    * fold
+    * for-comprehension
 * What's the difference between `fold` and `reduce`?
 * What is the difference (if any) between these 2 statements? 
 ```scala
@@ -162,7 +166,8 @@ val y = scala.collection.mutable.Set.empty[Int]
      }
      Await.result(r2, 7 seconds)
      ```
-* How can you make a `Future[List[String]]` from a `List[Future[String]]`? 
+* How can you make a `Future[List[T]]` from a `List[Future[T]]`? 
+    * Future.sequence
 * Is this call correct?
     * How log would it take to complete? 
     * Could it be quicker? 
