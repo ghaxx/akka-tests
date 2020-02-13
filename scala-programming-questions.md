@@ -1,7 +1,7 @@
 #Scala Job Interview Questions
 
 #### General Questions:
-[] Test
+
 * What did you learn yesterday/this week? 
 * Why and how did you start learning Scala?
 * What excites or interests you about coding in Scala?
