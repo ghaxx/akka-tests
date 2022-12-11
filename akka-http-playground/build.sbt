@@ -1,54 +1,24 @@
-name := "akka-http-playground"
 version := "1.0"
+scalaVersion  := "2.13.10"
 
-val akkaVersion = "2.5.6"
-val scalazVersion = "7.2.8"
+val akkaStreamsVersion = "2.7.0"
+val scalazVersion = "7.3.7"
 
 libraryDependencies ++= Seq(
-  "com.typesafe.akka" %% "akka-http" % "10.0.10",
-  "com.typesafe.akka" %% "akka-cluster" % akkaVersion,
-  "com.typesafe.akka" %% "akka-http-spray-json" % "10.0.5",
-  "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
-  "org.scalaz" %% "scalaz-core" % scalazVersion,
-  "org.scalatest" %% "scalatest" % "3.0.0" % "test",
-  "ch.qos.logback" % "logback-classic" % "1.1.8",
-  "com.typesafe.scala-logging" %% "scala-logging" % "3.5.0",
-  "com.chuusai" %% "shapeless" % "2.3.2",
-  "org.scalaj" %% "scalaj-http" % "2.3.0",
-  "io.shaka" %% "naive-http" % "90",
-  "org.asynchttpclient" % "async-http-client" % "2.0.29",
-  "org.apache.httpcomponents" % "httpasyncclient" % "4.1.3",
-  "commons-io" % "commons-io" % "2.5",
-  "com.squareup.okhttp3" % "okhttp" % "3.6.0",
-  "commons-io" % "commons-io" % "2.4"
+  "com.typesafe.akka"          %% "akka-http"                 % "10.4.0",
+  "org.scalaz"                 %% "scalaz-core"               % scalazVersion,
+  "org.scalatest"              %% "scalatest"                 % "3.2.14"        % "test",
+  "ch.qos.logback"             %  "logback-classic"           % "1.4.5",
+  "com.typesafe.scala-logging" %% "scala-logging"             % "3.9.5",
+  "com.chuusai"                %% "shapeless"                 % "2.3.9",
+  "org.scalaj"                 %% "scalaj-http"               % "2.4.2",
+  "io.shaka"                   %% "naive-http"                % "124",
+  "org.asynchttpclient"        %  "async-http-client"         % "2.0.29",
+  "org.apache.httpcomponents"  %  "httpasyncclient"           % "4.1.3",
+  "commons-io"                 %  "commons-io"                % "2.5",
+  "com.squareup.okhttp3"       %  "okhttp"                    % "3.6.0",
+  "io.gatling.highcharts"      %  "gatling-charts-highcharts" % "3.8.4"        % "test",
+  "io.gatling"                 %  "gatling-test-framework"    % "3.8.4"        % "test"
 )
 
-resolvers += "Tim Tennant's repo" at "http://dl.bintray.com/timt/repo/"
-
-enablePlugins(DockerPlugin)
-dockerfile in docker := {
-  val artifact: File = assembly.value
-  val artifactTargetPath = s"/app/${artifact.name}"
-
-  new Dockerfile {
-    from("java")
-    add(artifact, artifactTargetPath)
-    entryPoint("java", "-jar", artifactTargetPath)
-  }
-}
-
-assemblyMergeStrategy in assembly := {
-  case PathList("META-INF", "io.netty.versions.properties", xs @ _*) => MergeStrategy.last
-  case x =>
-    val old = (assemblyMergeStrategy in assembly).value
-    old(x)
-}
-
-imageNames in docker := Seq(
-  ImageName(s"${organization.value}/${name.value}:latest"),
-  ImageName(
-    namespace = Some(organization.value),
-    repository = name.value,
-    tag = Some("v" + version.value)
-  )
-)
+//resolvers += "Tim Tennant's repo" at "http://dl.bintray.com/timt/repo/"

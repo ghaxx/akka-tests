@@ -21,37 +21,32 @@ object Shapes extends App {
     f.toProduct(gen.to(p))
 
 
-  case class Summer[Types <: HList, Out] private(sources: List[Option[_]]) {
+  case class Summer[Types <: HList] private(sources: List[Option[_]]) {
 
-    def withOption[T](o: Option[T]) = Summer[T :: Types, Out](o :: sources)
+    def withOption[T](o: Option[T]) = Summer[T :: Types](o :: sources)
 
-    def withOutput[T] = Summer[Types, T](sources)
-
-    def apply[F](f: F)(
-      implicit fp: FnToProduct.Aux[F, Types => Out]
-    ) = {
-      val a: Types = sources.foldRight[HList](HNil)((v, m) ⇒ v.get :: m).asInstanceOf[Types]
-      f.toProduct(a)
+    def apply[F, R <: HList, Out](f: F)(
+      implicit fp: FnToProduct.Aux[F, R => Out], rev: Reverse.Aux[Types, R]
+    ): Out = {
+      val a: Types = sources.foldLeft[HList](HNil)((m, v) ⇒ v.get :: m).asInstanceOf[Types]
+      f.toProduct(rev(a))
     }
   }
 
   object Summer {
-    def withOption[T](o: Option[T]) = Summer[T :: HNil, AnyVal](o :: Nil)
+    def withOption[T](o: Option[T]) = Summer[T :: HNil](o :: Nil)
   }
 
-  case class D(v: Int)
-
-  Summer[Int :: D :: HNil, Unit](Some(1) :: Some(D(9)) :: Nil).apply {
-    (x: Int, y: D) ⇒ println((x, y))
-  }
+  //    Summer[Int :: Int :: HNil](Some(1) :: Some(2) :: Nil).apply {
+  //      (x: Int, y: Int) ⇒ println((x, y))
+  //    }
 
   val r = Summer
     .withOption(Some(1))
     .withOption(Some(2))
-    .withOption(Some(D(3)))
-    .withOutput[Unit]
+    .withOption(Some(3))
     .apply {
-      (x: D, y: Int, z: Int) ⇒ println(s"$x, $y, $z")
+      (x: Int, y: Int, z: Int) ⇒ println(s"$x + $y + $z")
     }
 
   println(r)

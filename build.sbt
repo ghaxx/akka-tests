@@ -1,15 +1,14 @@
 //import sbtassembly.Plugin._
 //import AssemblyKeys._
-
-scalaVersion in ThisBuild := "2.12.4"
-organization in ThisBuild := "ghx"
+scalaVersion  := "2.13.10"
+ThisProject / scalaVersion  := "2.13.10"
 
 lazy val `scala-tests` = project.in(file("."))
   .settings(
     name := "Scala Tests",
-    version := "1.0"
+    version := "1.0",
     //    assemblyShadeRules in assembly := Seq(
-    //      ShadeRule.zap("ch.**", "scala.**", "com.**").inAll,
+    ////      ShadeRule.zap("ch.**", "scala.**", "com.**").inAll,
     //      ShadeRule.rename("org.json4s.**" -> "rm.org.json4s.@1").inAll,
     //      ShadeRule.keep("**").inProject,
     //      ShadeRule.keep("pl.**", "rm.**", "org.json4s.**").inAll
@@ -23,32 +22,27 @@ lazy val `scala-tests` = project.in(file("."))
 
 //addArtifact(artifact in(Compile, assembly), assembly)
 
-lazy val `akka-stream-playground` = project.dependsOn(`test-kit`)
-lazy val `akka-actors-playground` = project.dependsOn(`test-kit`)
-lazy val `http-clients` = project.dependsOn(`test-kit`, `scala-async-http-client`)
-lazy val `akka-http-playground` = project.dependsOn(`scala-async-http-client`)
-lazy val `static-resources-server` = project
-lazy val `logstash-playground` = project
-lazy val `spray-playground` = project
-lazy val `cache-tests` = project.dependsOn(`test-kit`)
-lazy val `test-kit` = project
-lazy val misc = project.dependsOn(`test-kit`)
-lazy val `slick-playground` = project.dependsOn(`test-kit`)
-lazy val `scala-async-http-client` = RootProject(uri("https://github.com/ghaxx/scala-async-http-client.git"))
-lazy val `spray-client` = project
-lazy val `local-kafka` = project
+lazy val `akka-actors-playground` = project.settings(CommonSettings)
+lazy val `akka-http-playground` = project.settings(CommonSettings).dependsOn(`performance-test-kit`)
+lazy val `streams-playground` = project.settings(CommonSettings).dependsOn(`performance-test-kit`)
+lazy val `akka-streams-playground` = project.settings(CommonSettings).dependsOn(`performance-test-kit`)
+lazy val `akka-streams-kafka-playground` = project.settings(CommonSettings).dependsOn(`performance-test-kit`)
+lazy val `performance-test-kit` = project.settings(CommonSettings)
+lazy val misc = project.settings(CommonSettings)
+lazy val `slick-playground` = project.settings(CommonSettings).dependsOn(`performance-test-kit`)
+//lazy val `scala-async-http-client` = RootProject(uri("git://github.com/niedzwiedzislaw/scala-async-http-client.git"))
 
-//libraryDependencies in ThisBuild ++= Seq(
-//  "org.scalatest" %% "scalatest" % "3.0.0" % "test",
-//  "ch.qos.logback" % "logback-classic" % "1.2.3",
-//  "com.typesafe.scala-logging" %% "scala-logging" % "3.5.0",
-//  "org.json4s" %% "json4s-native" % "3.5.0"
-//)
+lazy val CommonLibraryDependencies = Seq(
+  Dependencies.scalatest % "test",
+  Dependencies.logback,
+  "com.typesafe.scala-logging" %% "scala-logging"   % "3.9.5",
+  Dependencies.`json4s-native`,
+  Dependencies.scalameter,
+  "ndz" %% "scala-async-http-client" % "1.0",
+  Dependencies.`zio-stream`
+)
 
-scalacOptions in ThisBuild ++= Seq(
-  "-feature",
-  "-language:implicitConversions",
-  "-language:higherKinds",
-  "-language:existentials",
-  "-language:postfixOps"
+lazy val CommonSettings = Seq(
+  scalaVersion  := "2.13.10",
+  libraryDependencies ++= CommonLibraryDependencies
 )

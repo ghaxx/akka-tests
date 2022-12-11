@@ -1,12 +1,12 @@
-package pl.partitioned
-
-import pl.performance.Timer
-
-
-object Global {
-  val timer = new Timer("global")
-  def p(x: Any) = {
-    //    println(x)
-    ()
-  }
-}
+//package pl.streams.partitioned
+//
+//import pl.performance.Timer
+//
+//
+//object Global {
+//  val timer = new Timer("global")
+//  def p(x: Any) = {
+//    //    println(x)
+//    ()
+//  }
+//}

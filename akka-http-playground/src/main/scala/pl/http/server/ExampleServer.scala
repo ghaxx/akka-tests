@@ -4,8 +4,9 @@ import java.util.concurrent.atomic.AtomicLong
 
 import akka.actor.ActorSystem
 import akka.event.Logging
+import akka.event.Logging.LogLevel
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.marshalling.ToResponseMarshaller
+import akka.http.scaladsl.marshalling.{ToResponseMarshallable, ToResponseMarshaller}
 import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
 import akka.util.Timeout
@@ -16,7 +17,7 @@ import scala.concurrent.duration._
 import scala.io.StdIn
 import scala.util.Random
 
-object ExampleServer extends App with CorsSupport with LazyLogging {
+object ExampleServer extends App with LazyLogging {
   implicit val system = ActorSystem("main-system", ConfigFactory.parseResources("akka-server.conf"))
   implicit val timeout = Timeout(3 seconds)
   implicit val materializer = ActorMaterializer()
@@ -31,11 +32,13 @@ object ExampleServer extends App with CorsSupport with LazyLogging {
 
   private def requestDuration = 2000
 
-  val dataStreaming = new DataStreaming
-
   val route =
     logRequestResult("Requests", Logging.InfoLevel) {
       path("random") {
+        complete {
+          "" + Random.nextInt(100)
+        }
+      } ~ path("random-wait") {
         delayedComplete(requestDuration) {
           "" + Random.nextInt(100)
         }
@@ -43,12 +46,10 @@ object ExampleServer extends App with CorsSupport with LazyLogging {
         delayedComplete(requestDuration) {
           "" + counter.getAndIncrement()
         }
-      } ~ path("big") {
-        complete((1 to (1024*1024*1024)).map(x => x + " ").mkString + "!!!")
-      } ~ dataStreaming.route
+      }
     }
 
-  val bindingFuture = Http().bindAndHandle(corsHandler(route), "localhost", 8080)
+  val bindingFuture = Http().bindAndHandle(route, "localhost", 8080)
 
   logger.info("Server online at http://localhost:8080")
   logger.info("Press RETURN to stop")
