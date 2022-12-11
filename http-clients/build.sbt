@@ -20,7 +20,7 @@ libraryDependencies ++= Seq(
   "com.squareup.okhttp3" % "okhttp" % "3.6.0"
 )
 
-resolvers += "Tim Tennant's repo" at "http://dl.bintray.com/timt/repo/"
+// `zio-stream`nt's repo" at "http://dl.bintray.com/timt/repo/"
 
 assemblyMergeStrategy in assembly := {
   case PathList("META-INF", "io.netty.versions.properties", xs @ _*) => MergeStrategy.last

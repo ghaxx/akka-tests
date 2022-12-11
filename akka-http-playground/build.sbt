@@ -21,4 +21,4 @@ libraryDependencies ++= Seq(
   "io.gatling"                 %  "gatling-test-framework"    % "3.8.4"        % "test"
 )
 
-//resolvers += "Tim Tennant's repo" at "http://dl.bintray.com/timt/repo/"
+//// `zio-stream`nt's repo" at "http://dl.bintray.com/timt/repo/"
